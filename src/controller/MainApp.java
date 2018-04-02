@@ -20,6 +20,7 @@ import view.editarProductoController;
 public class MainApp extends Application {
 
     private Stage productoVista;
+    private Stage inicio;
     private BorderPane borde;
     Lista lista = new Lista();
 
@@ -46,8 +47,10 @@ public class MainApp extends Application {
     }
     @Override
     public void start(Stage primaryStage) {
-        this.productoVista = primaryStage;
-        this.productoVista.setTitle("Inventario");
+        this.inicio = primaryStage;
+        this.inicio.setTitle("Inventario");
+        //this.productoVista = primaryStage;
+        //this.productoVista.setTitle("Inventario");
 
         initRootLayout();
 
@@ -66,13 +69,32 @@ public class MainApp extends Application {
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(borde);
-            productoVista.setScene(scene);
-            productoVista.show();
+            inicio.setScene(scene);
+            inicio.show();
+            //productoVista.setScene(scene);
+            //productoVista.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
+    
+//    public void mostrarInicio(){
+//        try{
+//            // cargar el inicio
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(MainApp.class.getResource("/view/Inicio.fxml"));
+//            AnchorPane inicio = (AnchorPane) loader.load();
+//            
+//            // ponerle el borde al inicio
+//            borde.setCenter(inicio);
+//            
+//            //InicioController controller = loader.getController();
+//            //controller.setMainApp(this);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+    
     /**
      * Shows the person overview inside the root layout.
      */
