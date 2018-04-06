@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import model.Producto;
 import model.lista.Lista;
 import view.AgregarProductoController;
+import view.InicioController;
 import view.ProductoVistaController;
 import view.editarProductoController;
 
@@ -26,8 +27,7 @@ public class MainApp extends Application {
 
     
     /**
-     * The data as an observable list of Producto.
-     * 
+     * The data as an observable list of Producto
      */
     private ObservableList<Producto> productoData = FXCollections.observableArrayList();
 
@@ -35,7 +35,6 @@ public class MainApp extends Application {
      * Constructor
      */
     public MainApp() {
-
     }
 
     /**
@@ -45,6 +44,7 @@ public class MainApp extends Application {
     public ObservableList<Producto> getProductoData() {
         return productoData;
     }
+    
     @Override
     public void start(Stage primaryStage) {
         this.inicio = primaryStage;
@@ -53,8 +53,9 @@ public class MainApp extends Application {
         //this.productoVista.setTitle("Inventario");
 
         initRootLayout();
-
-        showPersonOverview();
+        mostrarInicio();
+        //showPersonOverview();
+        
     }
 
     /**
@@ -78,22 +79,22 @@ public class MainApp extends Application {
         }
     }
     
-//    public void mostrarInicio(){
-//        try{
-//            // cargar el inicio
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(MainApp.class.getResource("/view/Inicio.fxml"));
-//            AnchorPane inicio = (AnchorPane) loader.load();
-//            
-//            // ponerle el borde al inicio
-//            borde.setCenter(inicio);
-//            
-//            //InicioController controller = loader.getController();
-//            //controller.setMainApp(this);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void mostrarInicio(){
+        try{
+            // cargar el inicio
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/view/Inicio.fxml"));
+            AnchorPane inicio = (AnchorPane) loader.load();
+            
+            // ponerle el borde al inicio
+            borde.setCenter(inicio);
+            
+            InicioController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * Shows the person overview inside the root layout.

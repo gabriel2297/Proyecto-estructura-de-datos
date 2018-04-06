@@ -11,14 +11,14 @@ import model.Producto;
  * @author gabriel
  */
 public class Lista {
-    private Nodo inicio;
-    private Nodo ultimo;
+    static private Nodo inicio;
+    static private Nodo ultimo;
     
     /**
      * Revisar si la lista esta vacia
      * @return true si inicio = null, false si no. 
      */
-    public boolean listaVacia(){
+    public static boolean listaVacia(){
         return inicio == null;
     }
     
@@ -30,7 +30,7 @@ public class Lista {
      * Si no, busca en donde se encuentra en el medio y actualiza el puntero.
      * @param p recibe un producto.
      */
-    public void agregarProducto(Producto p){
+    public static void agregarProducto(Producto p){
         // si la lista esta vacia
         if(listaVacia()){
             inicio = new Nodo(p); 
@@ -63,15 +63,14 @@ public class Lista {
             aux.setSiguiente(temp);
             temp.getSiguiente().setAnterior(temp);
         }
-        System.out.println("Agregado");
     }
     
-        /**
-         * Metodo para revisar si un codigo ya existe en la lista. 
-         * @param codigo recibe el codigo del producto a revisar
-         * @return retorna true si ya existe, false si no.
-         */
-        public boolean esDuplicado(int codigo){
+    /**
+    * Metodo para revisar si un codigo ya existe en la lista. 
+    * @param codigo recibe el codigo del producto a revisar
+    * @return retorna true si ya existe, false si no.
+    */
+    public static boolean esDuplicado(int codigo){
         boolean dup = false;
         if(!listaVacia()){
             Nodo aux = inicio;
@@ -92,42 +91,13 @@ public class Lista {
                     }
                 }
             }
-            System.out.println("lista no vacia. Imprimiendo dup: "+dup);
         return dup;
         }
         // si la lista esta vacia devuelve false
         else{
-            System.out.println("lista vacia. dup: "+dup);
             return dup;
         }
     }
-
-    /**
-     * Muestra en consola todos los productos en lista.
-     * 
-     */
-//    public void mostrarProductos(){
-//        if(!listaVacia()){
-//            Nodo aux = inicio;
-//            String s = "Productos en inventario: \n";
-//            s+="Nombre del producto: "+aux.getDato().getNombre()+
-//                    "\nCantidad en bodega: "+aux.getDato().getCantidadBodega()+"\nCodigo: "+aux.getDato().getCodigo()+
-//                    "\nPrecio de compra: "+aux.getDato().getPrecioCompra()+"\nPrecio de venta: "+aux.getDato().getPrecioVenta()
-//                    +"\n==========================\n";
-//            aux = aux.getSiguiente();
-//            while(aux!=inicio){
-//                s+="Nombre del producto: "+aux.getDato().getNombre()+
-//                    "\nCantidad en bodega: "+aux.getDato().getCantidadBodega()+"\nCodigo: "+aux.getDato().getCodigo()+
-//                    "\nPrecio de compra: "+aux.getDato().getPrecioCompra()+"\nPrecio de venta: "+aux.getDato().getPrecioVenta()
-//                    +"\n==========================\n";
-//                aux = aux.getSiguiente();
-//            }
-//            System.out.println(s);
-//        }
-//        else{
-//            System.out.println("Lista vacia");
-//        }
-//    }
     
     /**
      * Modificar un nodo.
@@ -137,7 +107,7 @@ public class Lista {
      * @param precioVenta nuevo precio de venta
      * @param nombre nuevo nombre
      */
-    public void modificar(int codigo, int cantidad, double precioCompra, double precioVenta, String nombre){
+    public static void modificar(int codigo, int cantidad, double precioCompra, double precioVenta, String nombre){
         Nodo modifica = existe(codigo);
         if(modifica!=null){
             modifica.getDato().setCantidadBodega(cantidad);
@@ -152,7 +122,7 @@ public class Lista {
      * @param codigo
      * @return retorna el nodo si se encuentra, null si no. 
      */
-    public Nodo existe(int codigo){
+    public static Nodo existe(int codigo){
         Nodo existe = null;
         if(!listaVacia()){
             Nodo aux = inicio;
@@ -181,7 +151,6 @@ public class Lista {
             return existe;
         }
         else{
-            System.out.println("Lista vacia. ");
             return existe;
         }
     }
@@ -190,7 +159,7 @@ public class Lista {
      * Eliminar un nodo. 
      * @param eliminar recibe en nodo a eliminar, lo busca, reacomoda la lista y termina.
      */
-    public void eliminar(Nodo eliminar){
+    public static void eliminar(Nodo eliminar){
         if(ultimo==inicio){
             eliminar.setDato(null);
             inicio = null;
@@ -221,4 +190,33 @@ public class Lista {
             }
         }
     }    
+    
+    /**
+     * Muestra en consola todos los productos en lista.
+     * 
+     */
+//    public void mostrarProductos(){
+//        if(!listaVacia()){
+//            Nodo aux = inicio;
+//            String s = "Productos en inventario: \n";
+//            s+="Nombre del producto: "+aux.getDato().getNombre()+
+//                    "\nCantidad en bodega: "+aux.getDato().getCantidadBodega()+"\nCodigo: "+aux.getDato().getCodigo()+
+//                    "\nPrecio de compra: "+aux.getDato().getPrecioCompra()+"\nPrecio de venta: "+aux.getDato().getPrecioVenta()
+//                    +"\n==========================\n";
+//            aux = aux.getSiguiente();
+//            while(aux!=inicio){
+//                s+="Nombre del producto: "+aux.getDato().getNombre()+
+//                    "\nCantidad en bodega: "+aux.getDato().getCantidadBodega()+"\nCodigo: "+aux.getDato().getCodigo()+
+//                    "\nPrecio de compra: "+aux.getDato().getPrecioCompra()+"\nPrecio de venta: "+aux.getDato().getPrecioVenta()
+//                    +"\n==========================\n";
+//                aux = aux.getSiguiente();
+//            }
+//            System.out.println(s);
+//        }
+//        else{
+//            System.out.println("Lista vacia");
+//        }
+//    }
+    
+    
 }

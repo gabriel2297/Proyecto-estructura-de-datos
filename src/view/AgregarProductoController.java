@@ -43,7 +43,7 @@ public class AgregarProductoController {
     /**
      * Sets the stage of this dialog.
      * 
-     * @param editarStage
+     * @param agregarStage
      */
     public void setDialogStage(Stage agregarStage) {
         this.agregarStage = agregarStage;
@@ -155,9 +155,7 @@ public class AgregarProductoController {
             alert.setTitle("Campos invalidos");
             alert.setHeaderText("Por favor corrija los espacios invalidos");
             alert.setContentText(errorMessage);
-
             alert.showAndWait();
-
             return false;
         }
     }

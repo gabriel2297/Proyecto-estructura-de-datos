@@ -3,8 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/gabriek/Documents/programacion/java_programs/estructura_de_datos/Proyecto/Proyecto_javafx/Inventario/src/model/lista/Lista.java</file>
-            <file>file:/Users/gabriek/Documents/programacion/java_programs/estructura_de_datos/Proyecto/Proyecto_javafx/Inventario/src/view/AgregarProductoController.java</file>
+            <file>file:/Users/gabriek/Documents/programacion/java_programs/estructura_de_datos/Proyecto/Proyecto_javafx/Inventario/src/controller/MainApp.java</file>
+            <file>file:/Users/gabriek/Documents/programacion/java_programs/estructura_de_datos/Proyecto/Proyecto_javafx/Inventario/src/view/InicioController.java</file>
         </group>
     </open-files>
 </project-private>

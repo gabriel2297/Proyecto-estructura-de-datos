@@ -57,19 +57,20 @@
                         <Label fx:id="precioVentaLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
-                  <ButtonBar layoutX="62.0" layoutY="444.0" prefHeight="40.0" prefWidth="211.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="15.0">
-                    <buttons>
-                        <ButtonBar prefHeight="40.0" prefWidth="285.0">
+                  <ButtonBar layoutX="14.0" layoutY="444.0" prefHeight="40.0" prefWidth="360.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0">
+                     <padding>
+                        <Insets left="10.0" right="40.0" />
+                     </padding>
+                     <buttons>
+                        <ButtonBar prefHeight="40.0" prefWidth="341.0">
                           <buttons>
                             <Button mnemonicParsing="false" onAction="#handleAgregarProducto" text="Nuevo" />
                               <Button mnemonicParsing="false" onAction="#handleEditarProducto" text="Editar" />
                               <Button fx:id="eliminar_btn" mnemonicParsing="false" onAction="#Eliminar_btnHandle" text="Eliminar" />
+                              <Button mnemonicParsing="false" onAction="#handleMenuBtn" text="Menú" />
                           </buttons>
                         </ButtonBar>
-                    </buttons>
-                     <padding>
-                        <Insets left="10.0" right="40.0" />
-                     </padding>
+                     </buttons>
                   </ButtonBar>
                </children>
             </AnchorPane>

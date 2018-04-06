@@ -35,10 +35,13 @@ public class ProductoVistaController {
     @FXML
     private Label cantidadBodegaLabel;
 
+    // button
+    @FXML
+    private Button menuButton;
+    
     // Reference to the main application.
     private MainApp mainApp;
-    
-    private Lista lista = new Lista();
+
 
     /**
      * The constructor.
@@ -72,7 +75,6 @@ public class ProductoVistaController {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-
         // Add observable list data to the table
         productoTable.setItems(mainApp.getProductoData());
     }
@@ -91,9 +93,6 @@ public class ProductoVistaController {
            cantidadBodegaLabel.setText(Integer.toString(producto.getCantidadBodega()));
            precioCompraLabel.setText(Double.toString(producto.getPrecioCompra()));
            precioVentaLabel.setText(Double.toString(producto.getPrecioVenta()));
-
-           // TODO: We need a way to convert the birthday into a String! 
-           // birthdayLabel.setText(...);
        } else {
            // Person is null, remove all the text.
            nombreLabel.setText("");
@@ -112,8 +111,8 @@ public class ProductoVistaController {
         int selectedIndex = productoTable.getSelectionModel().getSelectedIndex();
         if(selectedIndex>=0){
             Producto productoSeleccionado = productoTable.getSelectionModel().getSelectedItem();
-            Nodo nodo = lista.existe(productoSeleccionado.getCodigo());
-            lista.eliminar(nodo);
+            Nodo nodo = Lista.existe(productoSeleccionado.getCodigo());
+            Lista.eliminar(nodo);
             productoTable.getItems().remove(selectedIndex);
         }else{
             // Nothing selected.
@@ -121,7 +120,7 @@ public class ProductoVistaController {
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("No hubo ninguna seleccion");
             alert.setHeaderText("No selecciono ningun producto");
-            alert.setContentText("Por favor seleccione un producto de la tabla");
+            alert.setContentText("Por favor seleccione el producto a eliminar de la tabla");
             alert.showAndWait();
         }
    }
@@ -136,7 +135,7 @@ public class ProductoVistaController {
        if (productoSeleccionado != null) {
            boolean okClicked = mainApp.showEditarProductoDialog(productoSeleccionado);
            if (okClicked) {
-               lista.modificar(productoSeleccionado.getCodigo(), productoSeleccionado.getCantidadBodega(), 
+               Lista.modificar(productoSeleccionado.getCodigo(), productoSeleccionado.getCantidadBodega(), 
                        productoSeleccionado.getPrecioCompra(), productoSeleccionado.getPrecioVenta(),
                        productoSeleccionado.getNombre());
                showProductoDetails(productoSeleccionado);
@@ -147,7 +146,7 @@ public class ProductoVistaController {
            alert.initOwner(mainApp.getPrimaryStage());
            alert.setTitle("No seleccionó nada");
            alert.setHeaderText("Ningun producto seleccionado");
-           alert.setContentText("Por favor seleccione un producto de la tabla");
+           alert.setContentText("Por favor seleccione el producto a editar de la tabla");
            alert.showAndWait();
        }
    }
@@ -162,18 +161,23 @@ public class ProductoVistaController {
        boolean okClicked = mainApp.showAgregarProductoDialog(producto);
        if (okClicked){
            // revisar si es duplicado o no
-            if(lista.esDuplicado(producto.getCodigo())){
+            if(Lista.esDuplicado(producto.getCodigo())){
                 Alert alert = new Alert(AlertType.WARNING);
                 alert.initOwner(mainApp.getPrimaryStage());
                 alert.setTitle("Codigo ya existente");
                 alert.setHeaderText("El codigo ya existe");
-                alert.setContentText("Por favor utilice un nuevo codigo o borre el anterior.");
+                alert.setContentText("Por favor utilice un nuevo codigo o borre el producto anterior.");
                 alert.showAndWait();
             }else{
                 mainApp.getProductoData().add(producto);
-                lista.agregarProducto(producto);
+                Lista.agregarProducto(producto);
             }
        }
    }
    
+   @FXML
+   private void handleMenuBtn(){
+       mainApp.mostrarInicio();
+       
+   }
 }
