@@ -17,6 +17,7 @@ import model.lista.Lista;
 public class MainApp extends Application {
 
     private Stage productoVista;
+    private Stage ventaProductoVista;
     private Stage inicio;
     private BorderPane borde;
     Lista lista = new Lista();
@@ -205,26 +206,31 @@ public class MainApp extends Application {
        }
    }
    
-//   /**
-//     * Shows the person overview inside the root layout.
-//     */
-//    public void showPersonOverview() {
-//        try {
-//            // Load person overview.
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(MainApp.class.getResource("/view/ProductoVista.fxml"));
-//            AnchorPane productoVista = (AnchorPane) loader.load();
-//
-//            // Set person overview into the center of root layout.
-//            borde.setCenter(productoVista);
-//            
-//            // Give the controller access to the main app.
-//            ProductoVistaController controller = loader.getController();
-//            controller.setMainApp(this);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+   public void mostrarAgregarVentaDialog(){
+       try{
+           // carga la pantalla
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(MainApp.class.getResource("/view/AgregarVentaProductoVista.fxml"));
+           AnchorPane page = (AnchorPane) loader.load();
+           
+           // crear el nuevo dialogo
+           Stage dialogStage = new Stage();
+           dialogStage.setTitle("Agregar productos de venta");
+           dialogStage.initModality(Modality.WINDOW_MODAL);
+           dialogStage.initOwner(ventaProductoVista);
+           Scene scene = new Scene(page);
+           dialogStage.setScene(scene);
+           
+           // poner el controlador
+           AgregarProdVentaController controller = loader.getController();
+           controller.setDialogStage(dialogStage);
+           dialogStage.showAndWait();
+           
+           
+       }catch(IOException e){
+           e.printStackTrace();
+       }
+   }
 
     public static void main(String[] args) {
         launch(args);

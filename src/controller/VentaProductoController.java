@@ -80,5 +80,10 @@ public class VentaProductoController {
    private void handleMenuBtn(){
        mainApp.mostrarInicio();   
    }
+   
+   @FXML
+   private void handleAgregarBtn(){
+       mainApp.mostrarAgregarVentaDialog();
+   }
     
 }
