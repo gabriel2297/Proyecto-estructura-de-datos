@@ -13,10 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Producto;
 import model.lista.Lista;
-import view.AgregarProductoController;
-import view.InicioController;
-import view.ProductoVistaController;
-import view.editarProductoController;
 
 public class MainApp extends Application {
 
@@ -30,7 +26,7 @@ public class MainApp extends Application {
      * The data as an observable list of Producto
      */
     private ObservableList<Producto> productoData = FXCollections.observableArrayList();
-
+    
     /**
      * Constructor
      */
@@ -137,7 +133,7 @@ public class MainApp extends Application {
        try {
            // Load the fxml file and create a new stage for the popup dialog.
            FXMLLoader loader = new FXMLLoader();
-           loader.setLocation(MainApp.class.getResource("/view/editarProductoVista.fxml"));
+           loader.setLocation(MainApp.class.getResource("/view/EditarProductoVista.fxml"));
            AnchorPane page = (AnchorPane) loader.load();
 
            // Create the dialog Stage.
@@ -149,7 +145,7 @@ public class MainApp extends Application {
            dialogStage.setScene(scene);
 
            // Set the person into the controller.
-           editarProductoController controller = loader.getController();
+           EditarProductoController controller = loader.getController();
            controller.setDialogStage(dialogStage);
            controller.setProducto(producto);
 
@@ -166,7 +162,7 @@ public class MainApp extends Application {
    public boolean showAgregarProductoDialog(Producto producto){
        try{
            FXMLLoader loader = new FXMLLoader();
-           loader.setLocation(MainApp.class.getResource("/view/agregarProductoVista.fxml"));
+           loader.setLocation(MainApp.class.getResource("/view/AgregarProductoVista.fxml"));
            AnchorPane page = (AnchorPane) loader.load();
            
            // crear el nuevo dialogo
@@ -190,8 +186,47 @@ public class MainApp extends Application {
            return false;
        }
    }
+   
+   public void mostrarVentasProducto(){
+       try{
+           // cargar la pantalla de venta
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(MainApp.class.getResource("/view/VentaProductoVista.fxml"));
+           AnchorPane ventasProducto = (AnchorPane) loader.load();
+           
+           // poner el scene de productos en el medio de root layout
+           borde.setCenter(ventasProducto);
+           
+           // darle al controlador acceso al mainApp
+           VentaProductoController controller = loader.getController();
+           controller.setMainApp(this);
+       }catch(IOException e){
+           e.printStackTrace();
+       }
+   }
+   
+//   /**
+//     * Shows the person overview inside the root layout.
+//     */
+//    public void showPersonOverview() {
+//        try {
+//            // Load person overview.
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(MainApp.class.getResource("/view/ProductoVista.fxml"));
+//            AnchorPane productoVista = (AnchorPane) loader.load();
+//
+//            // Set person overview into the center of root layout.
+//            borde.setCenter(productoVista);
+//            
+//            // Give the controller access to the main app.
+//            ProductoVistaController controller = loader.getController();
+//            controller.setMainApp(this);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public static void main(String[] args) {
         launch(args);
     }
-}
+}   

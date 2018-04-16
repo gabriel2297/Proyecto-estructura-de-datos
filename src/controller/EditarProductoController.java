@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -12,7 +12,7 @@ import model.Producto;
  * 
  * @author Marco Jakob
  */
-public class editarProductoController {
+public class EditarProductoController {
 
     @FXML
     private TextField nombre_txt;

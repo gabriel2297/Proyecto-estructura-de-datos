@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -177,7 +177,6 @@ public class ProductoVistaController {
    
    @FXML
    private void handleMenuBtn(){
-       mainApp.mostrarInicio();
-       
+       mainApp.mostrarInicio();   
    }
 }
