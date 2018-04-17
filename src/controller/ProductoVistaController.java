@@ -69,7 +69,8 @@ public class ProductoVistaController {
     }
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Is called 
+     * by the main application to give a reference back to itself.
      * 
      * @param mainApp
      */

@@ -33,8 +33,6 @@ public class AgregarProdVentaController {
     // labels
     @FXML
     private Label nombreLabel;
-    @FXML
-    private Label cantidadVentaLabel;
 
     
     // Reference to the main application.
@@ -57,11 +55,11 @@ public class AgregarProdVentaController {
         codigoColumn.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
         cantidadColumn.setCellValueFactory(cellData -> cellData.getValue().cantidadBodegaProperty().asObject());
         // Clear person details.
-        // showProductoDetails(null);
+        mostrarProductoSeleccionado(null);
 
         // Listen for selection changes and show the person details when changed.
-        //productoTable.getSelectionModel().selectedItemProperty().addListener(
-                //(observable, oldValue, newValue) -> showProductoDetails(newValue));
+        productoTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> mostrarProductoSeleccionado(newValue));
     }
 
     /**
@@ -74,6 +72,22 @@ public class AgregarProdVentaController {
         this.mainApp = mainApp;
         productoTable.setItems(mainApp.getProductoData());
     }
+    
+    /**
+    * Fills all text fields to show details about the person.
+    * If the specified person is null, all text fields are cleared.
+    * 
+    * @param person the person or null
+    */
+   private void mostrarProductoSeleccionado(Producto producto) {
+       if (producto != null) {
+           // Fill the labels with info from the person object.
+           nombreLabel.setText(producto.getNombre());
+       } else {
+           // Person is null, remove all the text.
+           nombreLabel.setText("");
+       }
+   }
     
     /**
      * Called when the user clicks cancel.
