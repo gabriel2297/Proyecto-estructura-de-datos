@@ -69,8 +69,10 @@ public class AgregarProdVentaController {
      * 
      * @param agregarVentaStage
      */
-    public void setDialogStage(Stage agregarVentaStage) {
+    public void setDialogStage(Stage agregarVentaStage, MainApp mainApp) {
         this.agregarVentaStage = agregarVentaStage;
+        this.mainApp = mainApp;
+        productoTable.setItems(mainApp.getProductoData());
     }
     
     /**

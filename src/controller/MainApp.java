@@ -223,7 +223,7 @@ public class MainApp extends Application {
            
            // poner el controlador
            AgregarProdVentaController controller = loader.getController();
-           controller.setDialogStage(dialogStage);
+           controller.setDialogStage(dialogStage, this);
            dialogStage.showAndWait();
            
            
