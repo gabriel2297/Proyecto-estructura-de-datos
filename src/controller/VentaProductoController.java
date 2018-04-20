@@ -5,10 +5,16 @@
  */
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -36,14 +42,8 @@ public class VentaProductoController {
     private TableColumn<Dato, Double> precioColumn;
     @FXML 
     private TableColumn<Dato, Double> precioTotalColumn;
-    
-    // labels
-    @FXML
-    private Label totalPagarLabel;
 
-    // button
-    @FXML
-    private Button menuButton;
+    
     
     // Reference to the main application.
     private MainApp mainApp;
@@ -65,10 +65,6 @@ public class VentaProductoController {
         cantidadColumn.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty().asObject());
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().getDato().getDato().precioVentaProperty().asObject());
         precioTotalColumn.setCellValueFactory(cellData -> cellData.getValue().precioFinalProperty().asObject());
-        
-        // Listen for selection changes and show the person details when changed.
-        // ventasTable.getSelectionModel().selectedItemProperty().addListener(
-                //(observable, oldValue, newValue) -> showProductoDetails(newValue));
     }
     
     /**
@@ -80,12 +76,37 @@ public class VentaProductoController {
         this.mainApp = mainApp;
         ventasTable.setItems(mainApp.getVentasDato());
     }
-    
+        
     @FXML
     private void handleMenuBtn(){
        mainApp.mostrarInicio();   
     }
-   
+    
+    @FXML
+    private void handleVerTotal(){
+        double total = 0;
+        int tableSize = ventasTable.getItems().size();
+        if(tableSize == 0){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Total hasta el momento");
+            alert.setHeaderText(null);
+            alert.initOwner(mainApp.getVentaProductoVista());
+            alert.setContentText("Aún no hay datos en venta");
+            alert.showAndWait();
+        }
+        else{
+            for(int i=0;i<tableSize;i++){
+                total+=ventasTable.getItems().get(i).getPrecioFinal();
+            }
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Total hasta el momento");
+            alert.setHeaderText(null);
+            alert.initOwner(mainApp.getVentaProductoVista());
+            alert.setContentText("Total a pagar hasta el momento: ₡"+total);
+            alert.showAndWait();
+        }
+    }
+    
     @FXML
     private void handleAgregarBtn(){
        Dato dato = new Dato();
