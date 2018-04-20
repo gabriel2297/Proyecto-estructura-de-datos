@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import model.Producto;
 import model.lista.Nodo;
 import model.venta.Dato;
+import model.venta.Venta;
 
 /**
  *
@@ -54,7 +56,7 @@ public class AgregarProdVentaController {
     FilteredList<Producto> productos;
     
     private Stage agregarVentaStage;
-    private Producto producto;
+    private Dato dato;
     private boolean okClicked= false;
     
     /**
@@ -121,6 +123,19 @@ public class AgregarProdVentaController {
         productoTable.setItems(productos);
     }
     
+    public void setDato(Dato dato){
+        this.dato = dato;
+    }
+    
+    /**
+     * Returns true if the user clicked OK, false otherwise.
+     * 
+     * @return
+     */
+    public boolean isOkClicked() {
+        return okClicked;
+    }
+    
     /**
     * Fills all text fields to show details about the person.
     * If the specified person is null, all text fields are cleared.
@@ -145,4 +160,45 @@ public class AgregarProdVentaController {
         agregarVentaStage.close();
     }
     
+    /**
+     * Manejar cuando el usuario le da click a agregar
+     */
+    public void handleAgregarBtn(){
+        Producto productoSeleccionado = productoTable.getSelectionModel().getSelectedItem();
+        Nodo nodo = new Nodo(productoSeleccionado);
+        if(productoSeleccionado!=null){
+            if(isInputValid()){
+                dato.setCantidad(Integer.parseInt(cantidad.getText()));
+                dato.setDato(nodo);
+                okClicked = true;
+            }
+        }
+        agregarVentaStage.close();
+    }
+    
+    private boolean isInputValid(){
+        String errorMessage = "";
+        if (cantidad.getText() == null || cantidad.getText().length() == 0) {
+            errorMessage += "Cantidad no es valida\n";
+        }else{
+            // ver si es un entero
+            try{
+                Integer.parseInt(cantidad.getText());
+            } catch(NumberFormatException e){
+                errorMessage+= cantidad.getText()+" no es valida. Digite solo numeros por favor!\n";
+            }
+        }
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Show the error message.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(agregarVentaStage);
+            alert.setTitle("Campos invalidos");
+            alert.setHeaderText("Por favor corrija los espacios invalidos");
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+            return false;
+        }
+    }
 }

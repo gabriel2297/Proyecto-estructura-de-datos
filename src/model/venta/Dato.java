@@ -5,6 +5,11 @@
  */
 package model.venta;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import model.Producto;
 import model.lista.Nodo;
 
 /**
@@ -13,12 +18,14 @@ import model.lista.Nodo;
  */
 public class Dato {
     private Nodo dato;
-    private int cantidad = 0;
+    private IntegerProperty cantidad = new SimpleIntegerProperty();
+    private DoubleProperty precioFinal = new SimpleDoubleProperty();
     private Dato siguiente;
+    
     
     public Dato(Nodo dato, int cantidad) {
         this.dato = dato;
-        this.cantidad = cantidad;
+        this.cantidad = new SimpleIntegerProperty(cantidad);
     }
 
     public Dato(){}
@@ -39,12 +46,26 @@ public class Dato {
         this.siguiente = siguiente;
     }
     
-    public int getCantidad(){
+    public int getCantidad() {
+        return cantidad.get();
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad.set(cantidad);
+    }
+
+    public IntegerProperty cantidadProperty() {
         return cantidad;
     }
     
-    public void setCantidad(int cantidad){
-        this.cantidad = cantidad;
+    public double getPrecioFinal(){
+        return dato.getDato().getPrecioVenta()*cantidad.get();
     }
+    
+    public DoubleProperty precioFinalProperty(){
+        return new SimpleDoubleProperty(dato.getDato().getPrecioVenta()*cantidad.get());
+    }
+    
+    
     
 }

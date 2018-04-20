@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Producto;
 import model.lista.Lista;
+import model.venta.Dato;
 
 public class MainApp extends Application {
 
@@ -28,6 +29,12 @@ public class MainApp extends Application {
      */
     private ObservableList<Producto> productoData = FXCollections.observableArrayList();
     
+    
+    /**
+     * The data in sales as an observable list of datos
+     */
+    private ObservableList<Dato> ventaDatos = FXCollections.observableArrayList();
+    
     /**
      * Constructor
      */
@@ -40,6 +47,10 @@ public class MainApp extends Application {
      */
     public ObservableList<Producto> getProductoData() {
         return productoData;
+    }
+    
+    public ObservableList<Dato> getVentasDato(){
+        return ventaDatos;
     }
     
     @Override
@@ -129,8 +140,12 @@ public class MainApp extends Application {
      * Returns the main stage.
      * @return
      */
-    public Stage getPrimaryStage() {
+    public Stage getProductoVista() {
         return productoVista;
+    }
+    
+    public Stage getVentaProductoVista(){
+        return ventaProductoVista;
     }
     
     /**
@@ -217,7 +232,7 @@ public class MainApp extends Application {
        }
    }
    
-   public void mostrarAgregarVentaDialog(){
+   public boolean mostrarAgregarVentaDialog(Dato dato){
        try{
            // carga la pantalla
            FXMLLoader loader = new FXMLLoader();
@@ -235,9 +250,15 @@ public class MainApp extends Application {
            // poner el controlador
            AgregarProdVentaController controller = loader.getController();
            controller.setDialogStage(dialogStage, this);
+           controller.setDato(dato);
+           
+           
            dialogStage.showAndWait();
+           
+           return controller.isOkClicked();
        }catch(IOException e){
            e.printStackTrace();
+           return false;
        }
    }
 

@@ -120,7 +120,7 @@ public class ProductoVistaController {
         }else{
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
+            alert.initOwner(mainApp.getProductoVista());
             alert.setTitle("No hubo ninguna seleccion");
             alert.setHeaderText("No selecciono ningun producto");
             alert.setContentText("Por favor seleccione el producto a eliminar de la tabla");
@@ -146,7 +146,7 @@ public class ProductoVistaController {
        } else {
            // Nothing selected.
            Alert alert = new Alert(AlertType.WARNING);
-           alert.initOwner(mainApp.getPrimaryStage());
+           alert.initOwner(mainApp.getProductoVista());
            alert.setTitle("No seleccionó nada");
            alert.setHeaderText("Ningun producto seleccionado");
            alert.setContentText("Por favor seleccione el producto a editar de la tabla");
@@ -159,14 +159,14 @@ public class ProductoVistaController {
     * Abre un dialog para editar
     */
    @FXML
-   private void handleAgregarProducto(){
+   private void handleAgregarProducto() {
        Producto producto = new Producto();
        boolean okClicked = mainApp.showAgregarProductoDialog(producto);
        if (okClicked){
            // revisar si es duplicado o no
             if(Lista.esDuplicado(producto.getCodigo())){
                 Alert alert = new Alert(AlertType.WARNING);
-                alert.initOwner(mainApp.getPrimaryStage());
+                alert.initOwner(mainApp.getProductoVista());
                 alert.setTitle("Codigo ya existente");
                 alert.setHeaderText("El codigo ya existe");
                 alert.setContentText("Por favor utilice un nuevo codigo o borre el producto anterior.");

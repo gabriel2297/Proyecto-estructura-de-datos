@@ -24,12 +24,12 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TableView layoutY="36.0" prefHeight="281.0" prefWidth="798.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+                  <TableView fx:id="ventasTable" layoutY="36.0" prefHeight="281.0" prefWidth="798.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Producto" />
-                      <TableColumn prefWidth="203.0" text="Cantidad" />
-                        <TableColumn prefWidth="195.0" text="Precio por unidad" />
-                        <TableColumn prefWidth="75.0" text="Precio total por producto" />
+                      <TableColumn fx:id="productoColumn" prefWidth="75.0" text="Producto" />
+                      <TableColumn fx:id="cantidadColumn" prefWidth="203.0" text="Cantidad" />
+                        <TableColumn fx:id="precioColumn" prefWidth="195.0" text="Precio por unidad" />
+                        <TableColumn fx:id="precioTotalColumn" prefWidth="75.0" text="Precio total por producto" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
