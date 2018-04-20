@@ -49,6 +49,17 @@ public class MainApp extends Application {
         //this.productoVista = primaryStage;
         //this.productoVista.setTitle("Inventario");
 
+        // datos para testear 
+        for(int i=0;i<20;i++){
+            Producto prod = new Producto("Producto #"+i,i);
+            productoData.add(prod);
+        }
+        Producto prod = new Producto("Coca cola 1 litro",100);
+        Producto prod2 = new Producto("Coca cola 2 litros",200);
+        Producto prod3 = new Producto("Coca cola 3 litro",400);
+        Producto prod4 = new Producto("Coccaina",500);
+        productoData.addAll(prod,prod2,prod3,prod4);
+        
         initRootLayout();
         mostrarInicio();
         //showPersonOverview();
@@ -225,8 +236,6 @@ public class MainApp extends Application {
            AgregarProdVentaController controller = loader.getController();
            controller.setDialogStage(dialogStage, this);
            dialogStage.showAndWait();
-           
-           
        }catch(IOException e){
            e.printStackTrace();
        }

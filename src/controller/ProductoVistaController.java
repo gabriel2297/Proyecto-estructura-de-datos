@@ -80,6 +80,8 @@ public class ProductoVistaController {
         productoTable.setItems(mainApp.getProductoData());
     }
     
+
+    
     /**
     * Fills all text fields to show details about the person.
     * If the specified person is null, all text fields are cleared.

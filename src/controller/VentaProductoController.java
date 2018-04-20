@@ -5,12 +5,15 @@
  */
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.Producto;
+import model.venta.Dato;
 
 /**
  *
@@ -20,7 +23,7 @@ public class VentaProductoController {
     
     // tabla y columnas
     @FXML
-    private TableView<Producto> ventasTable;
+    private TableView<Dato> ventasTable;
     @FXML
     private TableColumn<Producto, String> productoColumn;
     @FXML
@@ -40,7 +43,7 @@ public class VentaProductoController {
     
     // Reference to the main application.
     private MainApp mainApp;
-
+    
     /**
      * Constructor
      */
@@ -57,11 +60,8 @@ public class VentaProductoController {
         //productoColumn.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         //cantidadColumn.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
         
-        // Clear person details.
-        //showProductoDetails(null);
-
         // Listen for selection changes and show the person details when changed.
-        //ventasTable.getSelectionModel().selectedItemProperty().addListener(
+        // ventasTable.getSelectionModel().selectedItemProperty().addListener(
                 //(observable, oldValue, newValue) -> showProductoDetails(newValue));
     }
     
@@ -72,18 +72,17 @@ public class VentaProductoController {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-        // Add observable list data to the table
-        // ventasTable.setItems(mainApp.getProductoData());
+        //ventasTable.setItems(productosEnVenta);
     }
     
     @FXML
-   private void handleMenuBtn(){
+    private void handleMenuBtn(){
        mainApp.mostrarInicio();   
-   }
+    }
    
-   @FXML
-   private void handleAgregarBtn(){
+    @FXML
+    private void handleAgregarBtn(){
        mainApp.mostrarAgregarVentaDialog();
-   }
-    
+    }
+   
 }
