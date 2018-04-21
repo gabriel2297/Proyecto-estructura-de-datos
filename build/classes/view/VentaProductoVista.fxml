@@ -39,7 +39,7 @@
                     <buttons>
                         <Button mnemonicParsing="false" onAction="#handleVerTotal" prefHeight="27.0" text="Ver total" />
                         <Button mnemonicParsing="false" onAction="#handleAgregarBtn" prefHeight="27.0" prefWidth="120.0" text="Agregar" />
-                      <Button mnemonicParsing="false" text="Facturar" />
+                      <Button mnemonicParsing="false" onAction="#handleFacturarBtn" text="Facturar" />
                         <Button mnemonicParsing="false" text="Eliminar" />
                         <Button mnemonicParsing="false" text="Editar" />
                         <Button fx:id="menuButton" mnemonicParsing="false" onAction="#handleMenuBtn" text="Menú" />

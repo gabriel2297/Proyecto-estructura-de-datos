@@ -63,7 +63,7 @@ public class Venta {
         return p.pilaVacia();
     }
     
-    public void eliminarVenta(){
+    public static void eliminarVenta(){
         p.vaciarPila();
     }
     
