@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -120,69 +121,72 @@ public class VentaProductoController {
     
     @FXML
     private void handleFacturarBtn(){
-        if(ventasTable.getItems().size()>0){
-            TextInputDialog dialog = new TextInputDialog("");
-            Alert alert = new Alert(AlertType.INFORMATION);
-            dialog.setTitle("Nombre de factura");
-            dialog.setHeaderText("¿Factura a nombre de quién?");
-            Optional<String> nombreFactura = dialog.showAndWait();
+        try{
+            if(!ventasTable.getItems().isEmpty()){
+                TextInputDialog dialog = new TextInputDialog("");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                dialog.setTitle("Nombre de factura");
+                dialog.setHeaderText("¿Factura a nombre de quién?");
+                Optional<String> nombreFactura = dialog.showAndWait();
 
-            double total = 0;
-            int tableSize = ventasTable.getItems().size();
-            for(int i=0;i<tableSize;i++){
-                    total+=ventasTable.getItems().get(i).getPrecioFinal();
-            }
-            final double IMPUESTO = 0.13;
-            double precioFinal = total + (total*IMPUESTO);
+                double total = 0;
+                int tableSize = ventasTable.getItems().size();
+                for(int i=0;i<tableSize;i++){
+                        total+=ventasTable.getItems().get(i).getPrecioFinal();
+                }
+                final double IMPUESTO = 0.13;
+                double precioFinal = total + (total*IMPUESTO);
 
-            int pagaCon = 0;
-            try{
-                dialog = new TextInputDialog("");
-                dialog.setTitle("Venta terminada satisfactoriamente");
-                dialog.setHeaderText("Factura a nombre de: "+nombreFactura.get()+
-                        "\n\nMonto a pagar: ₡"+precioFinal
-                        +"\n\n¿Con cuánto dinero paga el cliente? Presione 0 si es tarjeta.\n");
-                Optional<String> result = dialog.showAndWait();
-                pagaCon = Integer.parseInt(result.get());
-            }catch(NumberFormatException e){
-                e.printStackTrace();
-            }
-
-            while(pagaCon<precioFinal && pagaCon!=0){
-                dialog = new TextInputDialog("");
-                dialog.setTitle("Venta terminada satisfactoriamente");
-                dialog.setHeaderText("Factura a nombre de: "+nombreFactura.get()+
-                        "\n\nMonto a pagar: ₡"+precioFinal
-                        +"\n\nPor favor ingrese un cambio mayor al monto final del cliente. Presione 0 si es tarjeta.\n");
-                Optional<String> result = dialog.showAndWait();
+                int pagaCon = 0;
                 try{
+                    dialog = new TextInputDialog("");
+                    dialog.setTitle("Venta terminada satisfactoriamente");
+                    dialog.setHeaderText("Factura a nombre de: "+nombreFactura.get()+
+                            "\n\nMonto a pagar: ₡"+precioFinal
+                            +"\n\n¿Con cuánto dinero paga el cliente? Presione 0 si es tarjeta.\n");
+                    Optional<String> result = dialog.showAndWait();
                     pagaCon = Integer.parseInt(result.get());
                 }catch(NumberFormatException e){
                     e.printStackTrace();
                 }
-            }
 
-            if(pagaCon!=0){
-                alert.setTitle("Vuelto");
-                alert.setHeaderText("Cambio a entregar a cliente: "+(pagaCon-precioFinal));
+                while(pagaCon<precioFinal && pagaCon!=0){
+                    dialog = new TextInputDialog("");
+                    dialog.setTitle("Venta terminada satisfactoriamente");
+                    dialog.setHeaderText("Factura a nombre de: "+nombreFactura.get()+
+                            "\n\nMonto a pagar: ₡"+precioFinal
+                            +"\n\nPor favor ingrese un cambio mayor al monto final del cliente. Presione 0 si es tarjeta.\n");
+                    Optional<String> result = dialog.showAndWait();
+                    try{
+                        pagaCon = Integer.parseInt(result.get());
+                    }catch(NumberFormatException e){
+                        e.printStackTrace();
+                    }
+                }
+
+                if(pagaCon!=0){
+                    alert.setTitle("Vuelto");
+                    alert.setHeaderText("Cambio a entregar a cliente: "+(pagaCon-precioFinal));
+                    alert.showAndWait();
+                }    
+
+                Venta.eliminarVenta();
+                try{
+                    ventasTable.getItems().clear();
+                }catch(UnsupportedOperationException e){
+                    e.printStackTrace();
+                }
+            }else{
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Total hasta el momento");
+                alert.setHeaderText(null);
+                alert.initOwner(mainApp.getVentaProductoVista());
+                alert.setContentText("Aún no hay datos en venta");
                 alert.showAndWait();
-            }    
-
-            Venta.eliminarVenta();
-            try{
-                ventasTable.getItems().clear();
-            }catch(UnsupportedOperationException e){
-                e.printStackTrace();
             }
-        }else{
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Total hasta el momento");
-            alert.setHeaderText(null);
-            alert.initOwner(mainApp.getVentaProductoVista());
-            alert.setContentText("Aún no hay datos en venta");
-            alert.showAndWait();
+        }catch(NoSuchElementException e){
+            e.printStackTrace();
         }
-        
     }
     
     @FXML
@@ -210,8 +214,41 @@ public class VentaProductoController {
     }
     
     @FXML
+    private void handleEliminarTodosBtn(){
+        if(!ventasTable.getItems().isEmpty()){
+            int tableSize = ventasTable.getItems().size();
+            for(int i=0;i<tableSize;i++){
+                Venta.restaurarInventario(ventasTable.getItems().get(i).getDato(), ventasTable.getItems().get(i)
+                        .getDato().getDato().getCodigo());
+            }
+            Venta.eliminarVenta();
+            try{
+                ventasTable.getItems().clear();
+            }catch(UnsupportedOperationException e){
+                e.printStackTrace();
+            }
+            if(ventasTable.getItems().isEmpty()){
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Eliminados");
+                alert.setHeaderText(null);
+                alert.initOwner(mainApp.getVentaProductoVista());
+                alert.setContentText("Productos eliminados de manera exitosa.");
+                alert.showAndWait();
+            }
+        }
+        else{
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Total hasta el momento");
+            alert.setHeaderText(null);
+            alert.initOwner(mainApp.getVentaProductoVista());
+            alert.setContentText("Aún no hay datos en venta");
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
     private void handleEliminarBtn(){
-        if(ventasTable.getItems().size()>0){
+        if(!ventasTable.getItems().isEmpty()){
             Dato productoSeleccionado = ventasTable.getSelectionModel().getSelectedItem();
             if(productoSeleccionado!=null){
                 Venta.restaurarInventario(productoSeleccionado.getDato(), productoSeleccionado.getDato().getDato().getCodigo());

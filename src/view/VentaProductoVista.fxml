@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -39,9 +41,14 @@
                         <Button mnemonicParsing="false" onAction="#handleVerTotal" prefHeight="27.0" text="Ver total" />
                         <Button mnemonicParsing="false" onAction="#handleAgregarBtn" prefHeight="27.0" prefWidth="120.0" text="Agregar" />
                       <Button mnemonicParsing="false" onAction="#handleFacturarBtn" text="Facturar" />
-                        <Button mnemonicParsing="false" onAction="#handleEliminarBtn" text="Eliminar" />
                         <Button mnemonicParsing="false" onAction="#handleEditarBtn" text="Editar" />
                         <Button fx:id="menuButton" mnemonicParsing="false" onAction="#handleMenuBtn" text="Menú" />
+                        <MenuButton mnemonicParsing="false" text="Eliminar">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#handleEliminarTodosBtn" text="Eliminar todos" />
+                            <MenuItem mnemonicParsing="false" onAction="#handleEliminarBtn" text="Eliminar uno" />
+                          </items>
+                        </MenuButton>
                     </buttons>
                   </ButtonBar>
                </children>
