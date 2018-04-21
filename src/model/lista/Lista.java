@@ -117,7 +117,7 @@ public class Lista {
     
     /**
      * Buscar si existe un nodo en la lista con base al codigo
-     * @param codigo
+     * @param codigo -recibe el codigo a buscarse
      * @return retorna el nodo si se encuentra, null si no. 
      */
     public static Nodo existe(int codigo){

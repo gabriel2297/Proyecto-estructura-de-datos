@@ -68,7 +68,7 @@ public class ProductoVistaController {
     /**
      * Llamado por el main para tener una referencia hacia él mismo
      * Inicializa la tabla de productos con la información almacenada en el arreglo de productos en Main.
-     * @param mainApp
+     * @param mainApp - recibe el mainApp de mainApp
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;

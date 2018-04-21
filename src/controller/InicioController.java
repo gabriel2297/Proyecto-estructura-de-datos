@@ -25,7 +25,7 @@ public class InicioController {
 
      /**
      * Llamado por el main para tener una referencia hacia él mismo
-     * @param mainApp
+     * @param mainApp - recibe el mainApp de mainApp
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;

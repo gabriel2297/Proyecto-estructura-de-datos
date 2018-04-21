@@ -19,7 +19,7 @@ public class Nodo {
     
     /**
      * Constructor con informacion
-     * @param nodo
+     * @param dato - recibe el producto a buscarse
      */
     public Nodo(Producto dato){
         this.dato = dato;

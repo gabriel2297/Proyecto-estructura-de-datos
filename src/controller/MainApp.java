@@ -79,7 +79,7 @@ public class MainApp extends Application {
     
     /**
      * Metodo que inicializa la aplicacion. Muestra el menu de inicio y llena datos en producto para testear
-     * @param primaryStage 
+     * @param primaryStage - recibe el primeryStage
      */
     @Override
     public void start(Stage primaryStage) {
