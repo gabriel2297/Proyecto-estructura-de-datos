@@ -4,14 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Producto;
-import model.lista.Nodo;
 import model.venta.Dato;
 import model.venta.Venta;
 
 /**
- *
- * @author gabriek
+ * Clase que se encarga de editar productos que se están vendiendo. 
+
+ * @author Elena
  */
 public class EditarProductoVentaController {
     @FXML
@@ -25,26 +24,26 @@ public class EditarProductoVentaController {
     private boolean okClicked= false;
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Metodo que inicializa la clase de controlador. Es llamado despues de que el fxml es cargado
+     * 
      */
     @FXML
     private void initialize() {
     }
 
     /**
-     * Sets the stage of this dialog.
+     * Pone la ventana principal (a quien le pertenece) este dialogo
      * 
-     * @param editarStage
+     * @param editarVentaStage - recibe la ventana principal
      */
     public void setDialogStage(Stage editarVentaStage) {
         this.editarVentaStage = editarVentaStage;
     }
 
     /**
-     * Sets the producto to be edited in the dialog.
+     * Agrega el dato (producto) que va a ser editato al dialogo.
      * 
-     * @param producto
+     * @param dato - el producto que se va a editar
      */
     public void setDato(Dato dato) {
         this.dato = dato;
@@ -53,16 +52,21 @@ public class EditarProductoVentaController {
     }
 
     /**
-     * Returns true if the user clicked OK, false otherwise.
+     * Método que retorna true si el usuario le dio click a OK. 
      * 
-     * @return
+     * @return true si la persona le dio click a ok
+     * @return false si la persona no le dio click a ok.
      */
     public boolean isOkClicked() {
         return okClicked;
     }
 
     /**
-     * Called when the user clicks ok.
+     * Llamado para manejar cuando el usuario le da click a OK. 
+     * Luego de darle click, guarda el valor anterior por si se necesita luego de realizar las operaciones.
+     * Restaura el inventario a sus valores anteriores, ingresa la nueva cantidad decidida por el usuario. 
+     * Si la nueva cantidad es mayor a lo que hay en inventario, mostrará un error y volvera al valor anterior que guardámos.
+     * Si no, editará la pila en donde se almacenan las ventas y cerrará el diálogo.
      */
     @FXML
     private void handleOk() {
@@ -88,7 +92,7 @@ public class EditarProductoVentaController {
     }
 
     /**
-     * Called when the user clicks cancel.
+     * llamado cuando el usuario le da cancelar
      */
     @FXML
     private void handleCancel() {
@@ -96,9 +100,9 @@ public class EditarProductoVentaController {
     }
 
     /**
-     * Validates the user input in the text fields.
-     * 
-     * @return true if the input is valid
+     * Método que revisa si los datos que ingresó el usuario son correctos. 
+     * @return true si no hubo ningun error. 
+     * @return false si hay errores. Indica los errores. 
      */
     private boolean isInputValid() {
         String errorMessage = "";

@@ -4,8 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import controller.MainApp;
-import javafx.event.EventType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -13,6 +11,11 @@ import model.Producto;
 import model.lista.Lista;
 import model.lista.Nodo;
 
+/**
+ * Clase que se encarga de mantener el inventario
+ * 
+ * @author Elena
+ */
 public class ProductoVistaController {
     
     // tabla y columnas
@@ -35,69 +38,59 @@ public class ProductoVistaController {
     @FXML
     private Label cantidadBodegaLabel;
 
-    // button
-    @FXML
-    private Button menuButton;
-    
-    // Reference to the main application.
     private MainApp mainApp;
 
 
     /**
-     * The constructor.
-     * The constructor is called before the initialize() method.
+     * Constructor por defecto. 
+     * Llamado antes de que se llame el método de inicializar.
      */
     public ProductoVistaController() {
     }
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Metodo que inicializa la clase de controlador. Es llamado despues de que el fxml es cargado
+     * Inicializa la tabla con la información de nombre del producto y el código del producto
+     * Inicializa los detalles del producto con null.
+     * y escucha por cambios en la selección de produtos de ser el caso.
      */
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
         nombreColumn.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         codigoColumn.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
         
-        // Clear person details.
         showProductoDetails(null);
 
-        // Listen for selection changes and show the person details when changed.
         productoTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showProductoDetails(newValue));
     }
 
     /**
-     * Is called 
-     * by the main application to give a reference back to itself.
-     * 
+     * Llamado por el main para tener una referencia hacia él mismo
+     * Inicializa la tabla de productos con la información almacenada en el arreglo de productos en Main.
      * @param mainApp
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-        // Add observable list data to the table
         productoTable.setItems(mainApp.getProductoData());
     }
     
 
     
     /**
-    * Fills all text fields to show details about the person.
-    * If the specified person is null, all text fields are cleared.
+    * Método que llena los textfields con los datos del producto seleccionado.
+    * Si no se ha seleccionado ningun producto va a poner el textfield en blanco.
     * 
-    * @param person the person or null
+    * @param producto - recibe el producto que se seleccionó o null
     */
    private void showProductoDetails(Producto producto) {
        if (producto != null) {
-           // Fill the labels with info from the person object.
            nombreLabel.setText(producto.getNombre());
            codigoLabel.setText(Integer.toString(producto.getCodigo()));
            cantidadBodegaLabel.setText(Integer.toString(producto.getCantidadBodega()));
            precioCompraLabel.setText(Double.toString(producto.getPrecioCompra()));
            precioVentaLabel.setText(Double.toString(producto.getPrecioVenta()));
        } else {
-           // Person is null, remove all the text.
            nombreLabel.setText("");
            codigoLabel.setText("");
            cantidadBodegaLabel.setText("");
@@ -107,7 +100,10 @@ public class ProductoVistaController {
    }
    
    /**
-    * Called when the user clicks on the delete button.
+    * Método que maneja cuando la presona le da click a eliminar producto. 
+    * Primero obtiene el producto seleccionado, luego verifica que ese producto exista en la lista 
+    * Y procede a eliminarlo de la lista y tabla. 
+    * Muestra error si ningun producto es seleccionado.
     */
    @FXML
    private void Eliminar_btnHandle() {
@@ -136,7 +132,7 @@ public class ProductoVistaController {
    private void handleEditarProducto() {
        Producto productoSeleccionado = productoTable.getSelectionModel().getSelectedItem();
        if (productoSeleccionado != null) {
-           boolean okClicked = mainApp.showEditarProductoDialog(productoSeleccionado);
+           boolean okClicked = mainApp.mostrarEditarProductoDialogo(productoSeleccionado);
            if (okClicked) {
                Lista.modificar(productoSeleccionado.getCodigo(), productoSeleccionado.getCantidadBodega(), 
                        productoSeleccionado.getPrecioCompra(), productoSeleccionado.getPrecioVenta(),
@@ -156,12 +152,12 @@ public class ProductoVistaController {
    
    /**
     * Llamado cuando el usuario quiere agregar un nuevo producto. 
-    * Abre un dialog para editar
+    * Abre un dialog para agregar
     */
    @FXML
    private void handleAgregarProducto() {
        Producto producto = new Producto();
-       boolean okClicked = mainApp.showAgregarProductoDialog(producto);
+       boolean okClicked = mainApp.mostrarAgregarProductoDialogo(producto);
        if (okClicked){
            // revisar si es duplicado o no
             if(Lista.esDuplicado(producto.getCodigo())){
@@ -178,6 +174,9 @@ public class ProductoVistaController {
        }
    }
    
+   /**
+    * Llamado para volver al menú principal
+    */
    @FXML
    private void handleMenuBtn(){
        mainApp.mostrarInicio();   

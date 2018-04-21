@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -20,11 +12,13 @@ import javafx.stage.Stage;
 import model.Producto;
 import model.lista.Nodo;
 import model.venta.Dato;
-import model.venta.Venta;
 
 /**
- *
- * @author gabriek
+ * Clase AgregarProdVentaController
+ * Esta clase se encarga de controlar todas las acciones que realiza un usuario
+ * a la hora de agregar un producto a pila de venta.
+
+ * @author Elena
  */
 public class AgregarProdVentaController {
     
@@ -38,6 +32,7 @@ public class AgregarProdVentaController {
     @FXML
     private TableColumn<Producto, Integer> cantidadColumn;
 
+    // choicebox
     @FXML
     private ChoiceBox<String> choiceBox;
     
@@ -60,16 +55,22 @@ public class AgregarProdVentaController {
     private boolean okClicked= false;
     
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Metodo que inicializa la clase de controlador. Es llamado despues de que el fxml es cargado
+     * Inicializa la tabla con sus columnas, pone la descripcion de productos seleccionados en null ya que 
+     * no hay ninguno seleccionado en el momento de inicializar y agrega un choicebox donde se puede
+     * buscar un producto por codigo o por nombre del producto
+     * 
+     * Así mismo cuenta con un action listener que escucha a cambios en la selección de productos. Cuando detecta un cambio
+     * inmediatamente cambia el producto que se está manipulando.
      */
     @FXML
     private void initialize(){
-        // Initialize the person table with the two columns.
+        // inicializar la tabla de productos con 3 columnas
         nombreColumn.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         codigoColumn.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
         cantidadColumn.setCellValueFactory(cellData -> cellData.getValue().cantidadBodegaProperty().asObject());
-        // Clear person details.
+        
+        // limpiar los detalles de producto
         mostrarProductoSeleccionado(null);
         
         // agregar el choicebox
@@ -81,14 +82,16 @@ public class AgregarProdVentaController {
         
         busqueda.setOnKeyReleased(keyEvent ->
         {
-            switch (choiceBox.getValue())//Switch on choiceBox value
+            switch (choiceBox.getValue())// switch con el valor del choicebox seleccionado
             {
                 case "Buscar Producto":
-                    productos.setPredicate(p -> p.getNombre().toLowerCase().contains(busqueda.getText().toLowerCase().trim()));//filter table by first name
+                    // Filtra la tabla por el nombre
+                    productos.setPredicate(p -> p.getNombre().toLowerCase().contains(busqueda.getText().toLowerCase().trim()));
                     break;
                 case "Buscar Codigo":
+                    // Filtra tabla por codigo
                     try{
-                        productos.setPredicate(p -> p.getCodigo() == Integer.parseInt(busqueda.getText()));//filter table by first name
+                        productos.setPredicate(p -> p.getCodigo() == Integer.parseInt(busqueda.getText()));
                     }
                     catch(NumberFormatException e){
                         System.out.println("Error");
@@ -97,24 +100,28 @@ public class AgregarProdVentaController {
             }
         });
         
+        // cambiar la tabla al seleccionar un nuevo producto
         choiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
-        {//reset table and textfield when new choice is selected
+        {
             if (newVal != null)
             {
                 busqueda.setText("");
-                productos.setPredicate(null);//This is same as saying flPerson.setPredicate(p->true);
+                productos.setPredicate(null);
             }
         });
         
-        // Listen for selection changes and show the person details when changed.
+        // metodo que escucha por cambios en seleccion y cambia dinamicamente la seleccion
         productoTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> mostrarProductoSeleccionado(newValue));
     }
 
     /**
-     * Sets the stage of this dialog.
+     * Pone la ventana principal (a quien le pertenece) este dialogo
+     * Crea una listra filtrada de los productos para luego poder filtrarlos con el choicebox.
+     * Además, inserta a la tabla los productos que están en inventario.
      * 
-     * @param agregarVentaStage
+     * @param agregarVentaStage - recibe la ventana principal
+     * @param mainApp - recibe el mainApp para accesar a los productos
      */
     public void setDialogStage(Stage agregarVentaStage, MainApp mainApp) {
         this.agregarVentaStage = agregarVentaStage;
@@ -123,37 +130,41 @@ public class AgregarProdVentaController {
         productoTable.setItems(productos);
     }
     
+    /**
+     * Metodo que se encarga de cambiar la información de un nuevo dato.
+     * 
+     * @param dato - recibe el dato que queremos agregar. 
+     */
     public void setDato(Dato dato){
         this.dato = dato;
     }
     
     /**
-     * Returns true if the user clicked OK, false otherwise.
+     * Método que retorna true si el usuario le dio click a OK. 
      * 
-     * @return
+     * @return true si la persona le dio click a ok
+     * @return false si la persona no le dio click a ok.
      */
     public boolean isOkClicked() {
         return okClicked;
     }
     
     /**
-    * Fills all text fields to show details about the person.
-    * If the specified person is null, all text fields are cleared.
+    * Método que llena los textfields con los datos del producto seleccionado.
+    * Si no se ha seleccionado ningun producto va a poner el textfield en blanco.
     * 
-    * @param person the person or null
+    * @param person - recibe el producto que se seleccionó o null
     */
    private void mostrarProductoSeleccionado(Producto producto) {
        if (producto != null) {
-           // Fill the labels with info from the person object.
            nombreLabel.setText(producto.getNombre());
        } else {
-           // Person is null, remove all the text.
            nombreLabel.setText("");
        }
    }
     
     /**
-     * Called when the user clicks cancel.
+     * Método que es llamado para manejar cuando el usuario le da click a cancelar.
      */
     @FXML
     private void handleCancel() {
@@ -161,7 +172,9 @@ public class AgregarProdVentaController {
     }
     
     /**
-     * Manejar cuando el usuario le da click a agregar
+     * Manejar cuando el usuario le da click a agregar.
+     * Obtiene el producto seleccionado or el usuario, crea un nuevo nodo con ese producto y agrega la cantidad 
+     * que el usuario ingreso para dicho producto. Cierra la ventana (dialog) al terminar.
      */
     public void handleAgregarBtn(){
         Producto productoSeleccionado = productoTable.getSelectionModel().getSelectedItem();
@@ -176,6 +189,11 @@ public class AgregarProdVentaController {
         agregarVentaStage.close();
     }
     
+    /**
+     * Método que revisa si los datos que ingresó el usuario son correctos. 
+     * @return true si no hubo ningun error. 
+     * @return false si hay errores. Indica los errores. 
+     */
     private boolean isInputValid(){
         String errorMessage = "";
         if (cantidad.getText() == null || cantidad.getText().length() == 0) {
@@ -191,7 +209,7 @@ public class AgregarProdVentaController {
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            // Show the error message.
+            // mostrar los errores
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(agregarVentaStage);
             alert.setTitle("Campos invalidos");

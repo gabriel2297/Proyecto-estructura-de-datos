@@ -1,22 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.facturacion;
 
-import javax.swing.JOptionPane;
-
 /**
- *
- * @author gabriek
+ * Clase cola que se encarga de meter facturas a la cola
+ * 
+ * @author Alonso
  */
 public class Cola {
     private static NodoC frente;
     private static NodoC ultimo;
     
-    //Cola Informe De Facturas
-     
+   
+   /**
+    * Metodo encargado de agregar facturas a la cola
+    * @param d - recibe el nodo con la informacion del cliente
+    */  
     public static void meteFacturas(NodoC d){
       if(frente==null){
          frente=d;

@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -22,8 +16,9 @@ import model.venta.Dato;
 import model.venta.Venta;
 
 /**
- *
- * @author gabriel
+ * Clase que se encarga de mantener la venta de productos
+ * 
+ * @author Elena
  */
 public class VentaProductoController {
     
@@ -36,36 +31,32 @@ public class VentaProductoController {
     private TableColumn<Dato, Integer> cantidadColumn;
     @FXML 
     private TableColumn<Dato, Double> precioColumn;
-//    @FXML 
-//    private TableColumn<Dato, Double> precioTotalColumn;
+    
     private Cliente cliente;
     
-    
-    // Reference to the main application.
     private MainApp mainApp;
     
     /**
-     * Constructor
+     * Constructor por defecto. 
+     * Llamado antes de que se llame el método de inicializar.
      */
     public VentaProductoController() {
     }
     
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Metodo que inicializa la clase de controlador. Es llamado despues de que el fxml es cargado
+     * Inicializa la tabla con la información de nombre del producto, la cantidad que lleva y el precio por unidad
      */
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
         productoColumn.setCellValueFactory(cellData -> cellData.getValue().getDato().getDato().nombreProperty());
         cantidadColumn.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty().asObject());
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().getDato().getDato().precioVentaProperty().asObject());
-        //precioTotalColumn.setCellValueFactory(cellData -> cellData.getValue().precioFinalProperty().asObject());
     }
     
     /**
-     * Is called by the main application to give a reference back to itself.
-     * 
+     * Llamado por el main para tener una referencia hacia él mismo
+     * Inicializa la tabla de ventas con la información almacenada en el arreglo de ventas en Main.
      * @param mainApp
      */
     public void setMainApp(MainApp mainApp) {
@@ -73,11 +64,19 @@ public class VentaProductoController {
         ventasTable.setItems(mainApp.getVentasDato());
     }
         
+    /**
+     * Método para manejar el botón de volver al menú.
+     * Vuelve al menú.
+     */
     @FXML
     private void handleMenuBtn(){
        mainApp.mostrarInicio();   
     }
     
+    /**
+     * Método que permite ver el total de compra hasta el momento con los productos en carrito de compras.
+     * Muestra el total si hay productos; error si no hay productos aún. 
+     */
     @FXML
     private void handleVerTotal(){
         double total = 0;
@@ -103,6 +102,11 @@ public class VentaProductoController {
         }
     }
     
+    /**
+     * Método que permite agregar productos al carrito.
+     * Abre un dialogo de agregar venta, revisa si hay suficientes y muestra error si no
+     * Si hay suficientes los agrega al arreglo de venta.
+     */
     @FXML
     private void handleAgregarBtn(){
        Dato dato = new Dato();
@@ -124,6 +128,17 @@ public class VentaProductoController {
        }
     }
     
+    /**
+     * Método que se encarga de la parte de facturar productos. 
+     * Primero revisará si la tabla no está vacia. Si no, crea un nuevo dialogo y le pide al administrador
+     * el nombre del cliente para realizar la factura.
+     * 
+     * Suma todos los valores de los productos y le agrega el impuesto de venta. Guarda también esta información
+     * a la factura del cliente.
+     * 
+     * pide al administrador confirmar si el cliente paga con tarjeta o con efectivo. De pagar con efectivo
+     * le pedirá al cliente el total de billetes y le devolverá la cantidad que debe de dar de vuelto.
+     */
     @FXML
     private void handleFacturarBtn(){
         try{
@@ -203,11 +218,15 @@ public class VentaProductoController {
         }
     }
     
+    /**
+     * Manejar el botón de editar productos en venta. Esto lo logra por medio del dialogo que abre
+     * hacia el controlador de editar productos en venta.
+     */
     @FXML
     private void handleEditarBtn(){
        Dato productoSeleccionado = ventasTable.getSelectionModel().getSelectedItem();
        if (productoSeleccionado != null) {
-           boolean okClicked = mainApp.showEditarVentaProductoDialog(productoSeleccionado);
+           boolean okClicked = mainApp.mostrarEditarVentaProductoDialogo(productoSeleccionado);
            if (okClicked) {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Cambio realizado exitosamente");
@@ -217,7 +236,6 @@ public class VentaProductoController {
                 alert.showAndWait();
             }
        } else {
-           // Nothing selected.
            Alert alert = new Alert(AlertType.WARNING);
            alert.initOwner(mainApp.getProductoVista());
            alert.setTitle("No seleccionó nada");
@@ -227,6 +245,10 @@ public class VentaProductoController {
        }       
     }
     
+    /**
+     * Botón para eliminar todos los elementos del carrito. Devuelve todos los productos a inventario.
+     * Al finalizar limpia la tabla y la pila.
+     */
     @FXML
     private void handleEliminarTodosBtn(){
         if(!ventasTable.getItems().isEmpty()){
@@ -260,6 +282,10 @@ public class VentaProductoController {
         }
     }
     
+    /**
+     * Método que permite eliminar un elemento específico de la tabla cuando se selecciona.
+     * Devuelve su cantidad al inventario y lo quita de la pila y tabla.
+     */
     @FXML
     private void handleEliminarBtn(){
         if(!ventasTable.getItems().isEmpty()){

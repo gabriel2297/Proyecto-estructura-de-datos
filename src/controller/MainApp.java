@@ -16,6 +16,11 @@ import model.Producto;
 import model.lista.Lista;
 import model.venta.Dato;
 
+/**
+ * Clase principal encargada de llevar todos los llamados a métodos y llevar los arreglos
+ * 
+ * @author todos
+ */
 public class MainApp extends Application {
 
     private Stage productoVista;
@@ -26,18 +31,18 @@ public class MainApp extends Application {
 
     
     /**
-     * The data as an observable list of Producto
+     * ArrayList que guarda los datos de productos en inventario como una lista observable
      */
-    private ObservableList<Producto> productoData = FXCollections.observableArrayList();
+    private ObservableList<Producto> productoDatos = FXCollections.observableArrayList();
     
     
     /**
-     * The data in sales as an observable list of datos
+     * ArrayList que guarda los datos de productos en venta como una lista observable
      */
     private ObservableList<Dato> ventaDatos = FXCollections.observableArrayList();
     
     /**
-     * The data in facturas as an observable list of clientes
+     * ArrayList que guarda los datos de cliente para las facturas como una lista observable
      */
     private ObservableList<Cliente> facturaDatos = FXCollections.observableArrayList();
     
@@ -49,66 +54,78 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns the data as an observable list of Persons. 
-     * @return
+     * Método que devuelve los productos como un arraylist
+     * @return productoData 
      */
     public ObservableList<Producto> getProductoData() {
-        return productoData;
+        return productoDatos;
     }
     
+    /**
+     * Metodo que devuelve los datos en venta como un arraylist
+     * @return ventaDatos
+     */
     public ObservableList<Dato> getVentasDato(){
         return ventaDatos;
     }
     
+    /**
+     * Metodo que devuelve los datos en factura como un arraylist
+     * @return facturaDatos
+     */
     public ObservableList<Cliente> getFacturaDatos(){
         return facturaDatos;
     }
     
+    /**
+     * Metodo que inicializa la aplicacion. Muestra el menu de inicio y llena datos en producto para testear
+     * @param primaryStage 
+     */
     @Override
     public void start(Stage primaryStage) {
         this.inicio = primaryStage;
         this.inicio.setTitle("Inventario");
-        //this.productoVista = primaryStage;
-        //this.productoVista.setTitle("Inventario");
 
         // datos para testear 
         for(int i=65;i<85;i++){
             Producto prod = new Producto("Producto "+(char)i,i);
-            productoData.add(prod);
+            productoDatos.add(prod);
         }
         Producto prod = new Producto("Coca cola 1 litro",100);
         Producto prod2 = new Producto("Coca cola 2 litros",200);
         Producto prod3 = new Producto("Coca cola 3 litro",400);
         Producto prod4 = new Producto("Coccaina",500);
-        productoData.addAll(prod,prod2,prod3,prod4);
+        productoDatos.addAll(prod,prod2,prod3,prod4);
         
-        initRootLayout();
+        borde();
         mostrarInicio();
-        //showPersonOverview();
         
     }
 
     /**
-     * Initializes the root layout.
+     * Metodo que inicializa el borde de la aplicacion
      */
-    public void initRootLayout() {
+    public void borde() {
         try {
-            // Load root layout from fxml file.
+            // cargar el fxml del borde
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/view/Borde.fxml"));
             borde = (BorderPane) loader.load();
 
-            // Show the scene containing the root layout.
+            // muestra la escena contenida dentro del borde
             Scene scene = new Scene(borde);
             inicio.setScene(scene);
             inicio.show();
-            //productoVista.setScene(scene);
-            //productoVista.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
+    // metodos de ventanas principales (stages)
+    
+    /**
+     * Metodo que se encarga de mostrar el inicio de la aplicacion.
+     */
     public void mostrarInicio(){
         try{
             // cargar el inicio
@@ -127,105 +144,30 @@ public class MainApp extends Application {
     }
     
     /**
-     * Shows the person overview inside the root layout.
+     * Muestra el inventario de productos.
      */
-    public void showPersonOverview() {
+    public void mostrarInventarioDeProductos() {
         try {
-            // Load person overview.
+            // cargar la vista del producto fxml
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/view/ProductoVista.fxml"));
             AnchorPane productoVista = (AnchorPane) loader.load();
 
-            // Set person overview into the center of root layout.
+            // pone el inventario en el centro del borde
             borde.setCenter(productoVista);
             
-            // Give the controller access to the main app.
+            // le da acceso al controlador
             ProductoVistaController controller = loader.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
+    
     /**
-     * Returns the main stage.
-     * @return
+     * Muestra la pantalla de ventas de productos
      */
-    public Stage getProductoVista() {
-        return productoVista;
-    }
-    
-    public Stage getVentaProductoVista(){
-        return ventaProductoVista;
-    }
-    
-    /**
-    * Opens a dialog to edit details for the specified person. If the user
-    * clicks OK, the changes are saved into the provided person object and true
-    * is returned.
-    * 
-    * @param producto the person object to be edited
-    * @return true if the user clicked OK, false otherwise.
-    */
-   public boolean showEditarProductoDialog(Producto producto) {
-       try {
-           // Load the fxml file and create a new stage for the popup dialog.
-           FXMLLoader loader = new FXMLLoader();
-           loader.setLocation(MainApp.class.getResource("/view/EditarProductoVista.fxml"));
-           AnchorPane page = (AnchorPane) loader.load();
-
-           // Create the dialog Stage.
-           Stage dialogStage = new Stage();
-           dialogStage.setTitle("Editar producto");
-           dialogStage.initModality(Modality.WINDOW_MODAL);
-           dialogStage.initOwner(productoVista);
-           Scene scene = new Scene(page);
-           dialogStage.setScene(scene);
-
-           // Set the person into the controller.
-           EditarProductoController controller = loader.getController();
-           controller.setDialogStage(dialogStage);
-           controller.setProducto(producto);
-
-           // Show the dialog and wait until the user closes it
-           dialogStage.showAndWait();
-
-           return controller.isOkClicked();
-       } catch (IOException e) {
-           e.printStackTrace();
-           return false;
-       }
-   }
-   
-   public boolean showAgregarProductoDialog(Producto producto){
-       try{
-           FXMLLoader loader = new FXMLLoader();
-           loader.setLocation(MainApp.class.getResource("/view/AgregarProductoVista.fxml"));
-           AnchorPane page = (AnchorPane) loader.load();
-           
-           // crear el nuevo dialogo
-           Stage dialogStage = new Stage();
-           dialogStage.setTitle("Agregar producto");
-           dialogStage.initModality(Modality.WINDOW_MODAL);
-           dialogStage.initOwner(productoVista);
-           Scene scene = new Scene(page);
-           dialogStage.setScene(scene);
-           
-           // set the product into the controller
-           AgregarProductoController controller = loader.getController();
-           controller.setDialogStage(dialogStage);
-           controller.setProducto(producto);
-           
-           dialogStage.showAndWait();
-           
-           return controller.isOkClicked();
-       }catch(IOException e){
-           e.printStackTrace();
-           return false;
-       }
-   }
-   
-   public void mostrarVentasProducto(){
+    public void mostrarVentasProducto(){
        try{
            // cargar la pantalla de venta
            FXMLLoader loader = new FXMLLoader();
@@ -243,6 +185,9 @@ public class MainApp extends Application {
        }
    }
    
+   /**
+    * Muestra la pantalla de facturacion
+    */
    public void mostrarFacturacion() {
         try{
             // cargar la pantalla de facturacion
@@ -260,7 +205,106 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
    }
+
+    /**
+     * Devuelve el stage de producto
+     * @return productoVista - el stage
+     */
+    public Stage getProductoVista() {
+        return productoVista;
+    }
+    
+    /**
+     * Devuelve el stage de ventas
+     * @return ventaProductoVista - el stage
+     */
+    public Stage getVentaProductoVista(){
+        return ventaProductoVista;
+    }
+    
+    // metodos de editar o agregar que abren dialogos
+    
+    /**
+    * Abre un dialogo para editar los detalles del producto especifico.
+    * Si el usuario da click a OK guarda los cambios en el objeto producto y retorna true
+    * 
+    * @param producto - el objeto de producto que se va a editar
+    * @return true si el usuario presiona OK, false de lo contrario
+    */
+   public boolean mostrarEditarProductoDialogo(Producto producto) {
+       try {
+           // cargar el fxml
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(MainApp.class.getResource("/view/EditarProductoVista.fxml"));
+           AnchorPane page = (AnchorPane) loader.load();
+
+           // crea un nuevo dialogo para producto editar
+           Stage dialogStage = new Stage();
+           dialogStage.setTitle("Editar producto");
+           dialogStage.initModality(Modality.WINDOW_MODAL);
+           dialogStage.initOwner(productoVista);
+           Scene scene = new Scene(page);
+           dialogStage.setScene(scene);
+
+           // pone el producto en el controlador
+           EditarProductoController controller = loader.getController();
+           controller.setDialogStage(dialogStage);
+           controller.setProducto(producto);
+
+           // muestra el dialogo y espera   
+           dialogStage.showAndWait();
+
+           return controller.isOkClicked();
+       } catch (IOException e) {
+           e.printStackTrace();
+           return false;
+       }
+   }
    
+   /**
+    * Abre un dialogo para agregar un nuevo producto
+    * Si el usuario da click a OK guarda los cambios en el objeto producto y retorna true
+    * 
+    * @param producto - el objeto de producto que se va a agregar
+    * @return true si el usuario presiona OK, false de lo contrario
+    */
+   public boolean mostrarAgregarProductoDialogo(Producto producto){
+       try{
+           // cargar el fxml
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(MainApp.class.getResource("/view/AgregarProductoVista.fxml"));
+           AnchorPane page = (AnchorPane) loader.load();
+           
+           // crear el nuevo dialogo
+           Stage dialogStage = new Stage();
+           dialogStage.setTitle("Agregar producto");
+           dialogStage.initModality(Modality.WINDOW_MODAL);
+           dialogStage.initOwner(productoVista);
+           Scene scene = new Scene(page);
+           dialogStage.setScene(scene);
+           
+           // le pasa el producto al controlador
+           AgregarProductoController controller = loader.getController();
+           controller.setDialogStage(dialogStage);
+           controller.setProducto(producto);
+           
+           // abre el dialogo y espera respuesta del dialogo.
+           dialogStage.showAndWait();
+           
+           return controller.isOkClicked();
+       }catch(IOException e){
+           e.printStackTrace();
+           return false;
+       }
+   }
+   
+   /**
+    * Abre un dialogo para agregar un nuevo producto a ventas
+    * Si el usuario da click a OK guarda los cambios en el objeto dato y retorna true
+    * 
+    * @param dato - el objeto de producto que se va a agregar
+    * @return true si el usuario presiona OK, false de lo contrario
+    */
    public boolean mostrarAgregarVentaDialog(Dato dato){
        try{
            // carga la pantalla
@@ -276,7 +320,7 @@ public class MainApp extends Application {
            Scene scene = new Scene(page);
            dialogStage.setScene(scene);
            
-           // poner el controlador
+           // pasa el objeto que se va a agregar al controlador
            AgregarProdVentaController controller = loader.getController();
            controller.setDialogStage(dialogStage, this);
            controller.setDato(dato);
@@ -291,14 +335,21 @@ public class MainApp extends Application {
        }
    }
    
-   public boolean showEditarVentaProductoDialog(Dato dato) {
+   /**
+    * Abre un dialogo para editar la cantidad de uno de los productos en venta
+    * Si el usuario da click a OK guarda los cambios en el objeto dato y retorna true
+    * 
+    * @param dato - el objeto de venta que se va a editar
+    * @return true si el usuario presiona OK, false de lo contrario
+    */
+   public boolean mostrarEditarVentaProductoDialogo(Dato dato) {
        try {
-           // Load the fxml file and create a new stage for the popup dialog.
+           // cargar el fxml
            FXMLLoader loader = new FXMLLoader();
            loader.setLocation(MainApp.class.getResource("/view/EditarProductoVentaVista.fxml"));
            AnchorPane page = (AnchorPane) loader.load();
 
-           // Create the dialog Stage.
+           // crear el nuevo dialogo
            Stage dialogStage = new Stage();
            dialogStage.setTitle("Editar producto");
            dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -306,12 +357,12 @@ public class MainApp extends Application {
            Scene scene = new Scene(page);
            dialogStage.setScene(scene);
 
-           // Set the person into the controller.
+           // entregarle el dato que va a ser editado al controlador
            EditarProductoVentaController controller = loader.getController();
            controller.setDialogStage(dialogStage);
            controller.setDato(dato);
 
-           // Show the dialog and wait until the user closes it
+           // mostrar el dialogo
            dialogStage.showAndWait();
 
            return controller.isOkClicked();

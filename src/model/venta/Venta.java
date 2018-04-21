@@ -1,69 +1,68 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.venta;
 
 import model.lista.Nodo;
 
 /**
- *
- * @author gabriek
+ * Clase que mantiene todos los metodos necesarios para la venta de productos
+ * 
+ * @author Elena
  */
 public class Venta {
-    static Pila p=new Pila();
-    private Dato inicio;
-    //Factura f=new Factura();
     
-    // realizar nueva venta
-    
+    /**
+     * Metodo que se encarga de revisar si hay suficientes productos en stock como para realizar una venta
+     * @param aux - el dato que contiene la cantidad deseada
+     * @return true si la cantidad en stock es mayor o igual a la cantidad que se lleva
+     */
     public static boolean haySuficientes(Dato aux){
         return aux.getCantidad()<=aux.getDato().getDato().getCantidadBodega();
     }
     
+    /**
+     * Metodo para ingresar un nueo dato a la pila de ventas
+     * @param aux - el dato que contiene el producto con la cantidad y demas atributos a llevar.
+     */
     public static void nuevaVenta(Dato aux){
         aux.getDato().getDato().setCantidadBodega(aux.getDato().getDato().getCantidadBodega()-aux.getCantidad());
         Pila.agregar(aux);
     }
     
+    /**
+     * Metodo que restaura el inventario al editar un producto en venta o eliminar los productos
+     * @param aux - el dato que se esta eliminando o editando
+     * @param codigo - el codigo de este dato
+     */
     public static void restaurarInventario(Nodo aux, int codigo){
-        Dato aux2 = p.existe(codigo);
+        Dato aux2 = Pila.existe(codigo);
         int restaurarBodega = aux.getDato().getCantidadBodega()+aux2.getCantidad();
         aux.getDato().setCantidadBodega(restaurarBodega);
     }
     
-    // editar algun producto que lleva la persona
+    /**
+     * Metodo que edita una venta en especifico para cambiar la cantidad del producto a llevar
+     * @param codigo - el codigo del producto que se quiere cambiar
+     * @param nuevaCantidad - la nueva cantidad a llevar
+     */
     public static void editarVenta(int codigo, int nuevaCantidad){
-        Dato aux = p.existe(codigo);
+        Dato aux = Pila.existe(codigo);
         aux.getDato().getDato().setCantidadBodega(aux.getDato().getDato().getCantidadBodega()-aux.getCantidad());
-        p.editarProductoPila(codigo, nuevaCantidad);
+        Pila.editarProductoPila(codigo, nuevaCantidad);
     }
-    
-    // mostrar los productos en venta hasta el momento
-    public void mostrarVenta(){
-        p.mostrarPila();
-    }
-    
-    public boolean ventaVacia(){
-        return p.pilaVacia();
-    }
-    
+
+    /**
+     * Metodo para eliminar toda la venta. Vacia la pila
+     */
     public static void eliminarVenta(){
-        p.vaciarPila();
+        Pila.vaciarPila();
     }
     
+    /**
+     * Metodo para eliminar un dato en especifico de la pila.
+     * @param dato - recibe el dato que se quiere eliminar (producto)
+     */
     public static void eliminarDato(Dato dato){
-        p.eliminarDato(dato);
+        Pila.eliminarDato(dato);
     }
-    
-    public void mostrarFacturaCliente(){
-        p.facturaCliente();
-    }
-    
-//    public void mostrarInformeDeFactura(){
-//        p.informeDeFacturas();
-//    }
     
 }
 

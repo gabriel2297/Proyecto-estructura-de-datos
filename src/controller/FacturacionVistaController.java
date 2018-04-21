@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import java.time.LocalDateTime;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -13,9 +7,9 @@ import javafx.scene.control.TableView;
 import model.Cliente;
 
 /**
- * FXML Controller class
- *
- * @author gabriel
+ * Clase que se encarga de mantener la facturación de productos.
+ * 
+ * @author Alonso
  */
 public class FacturacionVistaController{
     // tabla y columnas
@@ -32,68 +26,65 @@ public class FacturacionVistaController{
     @FXML
     private Label totalLabel;
     
-    // Reference to the main application.
+    // referencia a la app principal.
     private MainApp mainApp;
 
 
     /**
-     * The constructor.
-     * The constructor is called before the initialize() method.
+     * Constructor por defecto. 
+     * Llamado antes de que se llame el método de inicializar.
      */
     public FacturacionVistaController() {
     }
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Metodo que inicializa la clase de controlador. Es llamado despues de que el fxml es cargado
+     * Inicializa la tabla con la información de nombre de la factura, inicializa los detalles de la factura
+     * y escucha por cambios en la selección de facturas de ser el caso.
      */
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
         clienteColumn.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         
-        // Clear person details.
         mostrarDetallesFactura(null);
 
-        // Listen for selection changes and show the person details when changed.
         facturasTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> mostrarDetallesFactura(newValue));
     }
 
     /**
-     * Is called 
-     * by the main application to give a reference back to itself.
-     * 
+     * Llamado por el main para tener una referencia hacia él mismo
+     * Inicializa la tabla de facturas con la información almacenada en el arreglo de facturas.
      * @param mainApp
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-        // Add observable list data to the table
         facturasTable.setItems(mainApp.getFacturaDatos());
     }
     
 
     
     /**
-    * Fills all text fields to show details about the person.
-    * If the specified person is null, all text fields are cleared.
+    * Método que llena los textfields con los datos del cliente seleccionado.
+    * Si no se ha seleccionado ninguna factura va a poner el textfield en blanco.
     * 
-    * @param person the person or null
+    * @param cliente - recibe el cliente que se seleccionó o null
     */
    private void mostrarDetallesFactura(Cliente cliente) {
        if (cliente != null) {
-           // Fill the labels with info from the person object.
            nombreLabel.setText(cliente.getNombre());
            totalLabel.setText((Double.toString(cliente.getTotal())));
            fechaCompraLabel.setText(cambiarFecha.format(cliente.getFechaCompra()));
        } else {
-           // Person is null, remove all the text.
            nombreLabel.setText("");
            totalLabel.setText("");
            fechaCompraLabel.setText("");
        }
    }
    
+   /**
+    * Método que maneja el botón de volver a menú.
+    */
    @FXML
    private void handleMenuBtn(){
        mainApp.mostrarInicio();   

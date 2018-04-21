@@ -1,39 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-/**
- *
- * @author gabriek
- */
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
 
 /**
- * Helper functions for handling dates.
+ * Clase para manejar los cambios de fecha
  * 
- * @author Marco Jakob
+ * @author gabriel
  */
 public class cambiarFecha {
 
-    /** The date pattern that is used for conversion. Change as you wish. */
-    //private static final String DATE_PATTERN = "dd/MM/yyyy HH:MM";
-
-    /** The date formatter. */
+    /**
+     * Método para darle formato a la fecha.
+     */
     private static final DateTimeFormatter DATE_FORMATTER = 
             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
 
     /**
-     * Returns the given date as a well formatted String. The above defined 
-     * {@link DateUtil#DATE_PATTERN} is used.
+     * Método que retorna la fecha como un string. 
      * 
-     * @param date the date to be returned as a string
-     * @return formatted string
+     * @param date - la fecha que se quiere retornar como un string
+     * @return - devuelve la fecha como String
      */
     public static String format(LocalDateTime date) {
         if (date == null) {
@@ -42,31 +31,4 @@ public class cambiarFecha {
         return DATE_FORMATTER.format(date);
     }
 
-    /**
-     * Converts a String in the format of the defined {@link DateUtil#DATE_PATTERN} 
-     * to a {@link LocalDate} object.
-     * 
-     * Returns null if the String could not be converted.
-     * 
-     * @param dateString the date as String
-     * @return the date object or null if it could not be converted
-     */
-    public static LocalDateTime parse(String dateString) {
-        try {
-            return DATE_FORMATTER.parse(dateString, LocalDateTime::from);
-        } catch (DateTimeParseException e) {
-            return null;
-        }
-    }
-
-    /**
-     * Checks the String whether it is a valid date.
-     * 
-     * @param dateString
-     * @return true if the String is a valid date
-     */
-    public static boolean validDate(String dateString) {
-        // Try to parse the String.
-        return cambiarFecha.parse(dateString) != null;
-    }
 }

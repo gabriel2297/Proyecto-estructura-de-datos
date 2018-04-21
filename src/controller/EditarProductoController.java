@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 import model.Producto;
 
 /**
- * Dialog to edit details of a person.
- * 
- * @author Marco Jakob
+ * Clase que se encarga de editar productos del inventario. 
+
+ * @author Gabriel
  */
 public class EditarProductoController {
 
@@ -29,26 +29,26 @@ public class EditarProductoController {
     private boolean okClicked= false;
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Metodo que inicializa la clase de controlador. Es llamado despues de que el fxml es cargado
+     * 
      */
     @FXML
     private void initialize() {
     }
 
     /**
-     * Sets the stage of this dialog.
+     * Pone la ventana principal (a quien le pertenece) este dialogo
      * 
-     * @param editarStage
+     * @param editarStage - recibe la ventana principal
      */
     public void setDialogStage(Stage editarStage) {
         this.editarStage = editarStage;
     }
 
     /**
-     * Sets the producto to be edited in the dialog.
+     * Agrega el producto que va a ser editato al dialogo.
      * 
-     * @param producto
+     * @param producto - el producto que se va a editar
      */
     public void setProducto(Producto producto) {
         this.producto = producto;
@@ -59,16 +59,18 @@ public class EditarProductoController {
     }
 
     /**
-     * Returns true if the user clicked OK, false otherwise.
+     * Método que retorna true si el usuario le dio click a OK. 
      * 
-     * @return
+     * @return true si la persona le dio click a ok
+     * @return false si la persona no le dio click a ok.
      */
     public boolean isOkClicked() {
         return okClicked;
     }
 
     /**
-     * Called when the user clicks ok.
+     * Llamado para manejar cuando el usuario le da click a OK. 
+     * Luego de darle click, agregará los datos que introdujo el usuario al producto y cerrará el dialogo..
      */
     @FXML
     private void handleOk() {
@@ -83,7 +85,7 @@ public class EditarProductoController {
     }
 
     /**
-     * Called when the user clicks cancel.
+     * llamado cuando el usuario le da cancelar
      */
     @FXML
     private void handleCancel() {
@@ -91,9 +93,9 @@ public class EditarProductoController {
     }
 
     /**
-     * Validates the user input in the text fields.
-     * 
-     * @return true if the input is valid
+     * Método que revisa si los datos que ingresó el usuario son correctos. 
+     * @return true si no hubo ningun error. 
+     * @return false si hay errores. Indica los errores. 
      */
     private boolean isInputValid() {
         String errorMessage = "";

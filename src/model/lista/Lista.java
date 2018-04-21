@@ -1,13 +1,11 @@
-/**
- * Lista circular doblemente enlazada.
- * Mantiene todos los metodos encargados del CRUD del producto
- */
 package model.lista;
 
 import model.Producto;
 
 /**
- *
+ * Lista circular doblemente enlazada.
+ * Mantiene todos los metodos encargados del CRUD del producto
+ * 
  * @author gabriel
  */
 public class Lista {
@@ -100,7 +98,7 @@ public class Lista {
     }
     
     /**
-     * Modificar un nodo.
+     * Metodo para modificar un nodo
      * @param codigo recibe el codigo del nodo
      * @param cantidad nueva cantidad
      * @param precioCompra nuevo precio de compra
@@ -156,7 +154,7 @@ public class Lista {
     }
     
     /**
-     * Eliminar un nodo. 
+     * Metodo para eliminar un nodo de la lista
      * @param eliminar recibe en nodo a eliminar, lo busca, reacomoda la lista y termina.
      */
     public static void eliminar(Nodo eliminar){
@@ -190,33 +188,5 @@ public class Lista {
             }
         }
     }    
-    
-    /**
-     * Muestra en consola todos los productos en lista.
-     * 
-     */
-//    public void mostrarProductos(){
-//        if(!listaVacia()){
-//            Nodo aux = inicio;
-//            String s = "Productos en inventario: \n";
-//            s+="Nombre del producto: "+aux.getDato().getNombre()+
-//                    "\nCantidad en bodega: "+aux.getDato().getCantidadBodega()+"\nCodigo: "+aux.getDato().getCodigo()+
-//                    "\nPrecio de compra: "+aux.getDato().getPrecioCompra()+"\nPrecio de venta: "+aux.getDato().getPrecioVenta()
-//                    +"\n==========================\n";
-//            aux = aux.getSiguiente();
-//            while(aux!=inicio){
-//                s+="Nombre del producto: "+aux.getDato().getNombre()+
-//                    "\nCantidad en bodega: "+aux.getDato().getCantidadBodega()+"\nCodigo: "+aux.getDato().getCodigo()+
-//                    "\nPrecio de compra: "+aux.getDato().getPrecioCompra()+"\nPrecio de venta: "+aux.getDato().getPrecioVenta()
-//                    +"\n==========================\n";
-//                aux = aux.getSiguiente();
-//            }
-//            System.out.println(s);
-//        }
-//        else{
-//            System.out.println("Lista vacia");
-//        }
-//    }
-    
     
 }
