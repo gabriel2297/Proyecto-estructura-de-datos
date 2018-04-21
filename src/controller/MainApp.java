@@ -261,6 +261,36 @@ public class MainApp extends Application {
            return false;
        }
    }
+   
+   public boolean showEditarVentaProductoDialog(Dato dato) {
+       try {
+           // Load the fxml file and create a new stage for the popup dialog.
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(MainApp.class.getResource("/view/EditarProductoVentaVista.fxml"));
+           AnchorPane page = (AnchorPane) loader.load();
+
+           // Create the dialog Stage.
+           Stage dialogStage = new Stage();
+           dialogStage.setTitle("Editar producto");
+           dialogStage.initModality(Modality.WINDOW_MODAL);
+           dialogStage.initOwner(ventaProductoVista);
+           Scene scene = new Scene(page);
+           dialogStage.setScene(scene);
+
+           // Set the person into the controller.
+           EditarProductoVentaController controller = loader.getController();
+           controller.setDialogStage(dialogStage);
+           controller.setDato(dato);
+
+           // Show the dialog and wait until the user closes it
+           dialogStage.showAndWait();
+
+           return controller.isOkClicked();
+       } catch (IOException e) {
+           e.printStackTrace();
+           return false;
+       }
+   }
 
     public static void main(String[] args) {
         launch(args);

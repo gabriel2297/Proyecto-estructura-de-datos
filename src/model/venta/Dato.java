@@ -63,9 +63,11 @@ public class Dato {
     }
     
     public DoubleProperty precioFinalProperty(){
-        return new SimpleDoubleProperty(dato.getDato().getPrecioVenta()*cantidad.get());
+        return new SimpleDoubleProperty(dato.getDato().getPrecioVenta()*getCantidad());
     }
     
-    
+    public void setPrecioFinalProperty(double precioFinal){
+        this.precioFinalProperty().set(precioFinal);
+    }
     
 }
