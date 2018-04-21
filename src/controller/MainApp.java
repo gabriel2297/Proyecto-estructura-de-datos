@@ -72,8 +72,8 @@ public class MainApp extends Application {
         //this.productoVista.setTitle("Inventario");
 
         // datos para testear 
-        for(int i=0;i<20;i++){
-            Producto prod = new Producto("Producto #"+i,i);
+        for(int i=65;i<85;i++){
+            Producto prod = new Producto("Producto "+(char)i,i);
             productoData.add(prod);
         }
         Producto prod = new Producto("Coca cola 1 litro",100);

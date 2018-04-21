@@ -16,6 +16,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import model.Cliente;
+import model.facturacion.Cola;
+import model.facturacion.NodoC;
 import model.venta.Dato;
 import model.venta.Venta;
 
@@ -145,6 +147,9 @@ public class VentaProductoController {
                 nuevoCliente.setTotal(precioFinal);
                 nuevoCliente.setFechaCompra(LocalDateTime.now());
                 mainApp.getFacturaDatos().add(nuevoCliente);
+                
+                NodoC cliente = new NodoC(nuevoCliente);
+                Cola.meteFacturas(cliente);
                 
                 int pagaCon = 0;
                 try{
