@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Cliente;
 import model.Producto;
 import model.lista.Lista;
 import model.venta.Dato;
@@ -36,6 +37,12 @@ public class MainApp extends Application {
     private ObservableList<Dato> ventaDatos = FXCollections.observableArrayList();
     
     /**
+     * The data in facturas as an observable list of clientes
+     */
+    private ObservableList<Cliente> facturaDatos = FXCollections.observableArrayList();
+    
+    
+    /**
      * Constructor
      */
     public MainApp() {
@@ -51,6 +58,10 @@ public class MainApp extends Application {
     
     public ObservableList<Dato> getVentasDato(){
         return ventaDatos;
+    }
+    
+    public ObservableList<Cliente> getFacturaDatos(){
+        return facturaDatos;
     }
     
     @Override
@@ -232,6 +243,24 @@ public class MainApp extends Application {
        }
    }
    
+   public void mostrarFacturacion() {
+        try{
+            // cargar la pantalla de facturacion
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/view/FacturacionVista.fxml"));
+            AnchorPane facturacion = (AnchorPane) loader.load();
+            
+            // poner el scene de facturacion en el medio del root layout
+            borde.setCenter(facturacion);
+            
+            // darle al controlador acceso al mainApp
+            FacturacionVistaController controller = loader.getController();
+            controller.setMainApp(this);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+   }
+   
    public boolean mostrarAgregarVentaDialog(Dato dato){
        try{
            // carga la pantalla
@@ -295,4 +324,6 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    
 }   

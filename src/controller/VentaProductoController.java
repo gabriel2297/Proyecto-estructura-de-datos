@@ -5,6 +5,8 @@
  */
 package controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
+import model.Cliente;
 import model.venta.Dato;
 import model.venta.Venta;
 
@@ -33,7 +36,7 @@ public class VentaProductoController {
     private TableColumn<Dato, Double> precioColumn;
 //    @FXML 
 //    private TableColumn<Dato, Double> precioTotalColumn;
-
+    private Cliente cliente;
     
     
     // Reference to the main application.
@@ -123,12 +126,14 @@ public class VentaProductoController {
     private void handleFacturarBtn(){
         try{
             if(!ventasTable.getItems().isEmpty()){
+                Cliente nuevoCliente = new Cliente();
                 TextInputDialog dialog = new TextInputDialog("");
                 Alert alert = new Alert(AlertType.INFORMATION);
                 dialog.setTitle("Nombre de factura");
                 dialog.setHeaderText("¿Factura a nombre de quién?");
                 Optional<String> nombreFactura = dialog.showAndWait();
-
+                nuevoCliente.setNombre(nombreFactura.get());
+                
                 double total = 0;
                 int tableSize = ventasTable.getItems().size();
                 for(int i=0;i<tableSize;i++){
@@ -136,7 +141,11 @@ public class VentaProductoController {
                 }
                 final double IMPUESTO = 0.13;
                 double precioFinal = total + (total*IMPUESTO);
-
+                
+                nuevoCliente.setTotal(precioFinal);
+                nuevoCliente.setFechaCompra(LocalDateTime.now());
+                mainApp.getFacturaDatos().add(nuevoCliente);
+                
                 int pagaCon = 0;
                 try{
                     dialog = new TextInputDialog("");

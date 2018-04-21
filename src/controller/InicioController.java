@@ -1,17 +1,6 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import controller.MainApp;
-import javafx.event.EventType;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import model.Producto;
-import model.lista.Lista;
-import model.lista.Nodo;
 
 public class InicioController {
     // Reference to the main application.
@@ -47,5 +36,9 @@ public class InicioController {
     
     public void handleProductoBtn(){
         mainApp.showPersonOverview();
+    }
+    
+    public void handleFacturacionBtn(){
+        mainApp.mostrarFacturacion();
     }
 }
