@@ -25,15 +25,15 @@
         </rowConstraints>
          <children>
             <Label text="Producto" />
+            <Label text="Codigo" GridPane.rowIndex="1" />
             <Label text="Cantidad" GridPane.rowIndex="2" />
             <Label text="Precio de compra" GridPane.rowIndex="3" />
             <Label text="Precio de venta" GridPane.rowIndex="4" />
             <TextField fx:id="nombre_txt" promptText="Nombre del producto" GridPane.columnIndex="1" />
+            <TextField fx:id="codigo_txt" promptText="Codigo del producto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="cantidadBodega_txt" promptText="Cantidad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="precioCompra_txt" promptText="Precio de compra" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="precioVenta_txt" promptText="Precio de venta" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Codigo" GridPane.rowIndex="1" />
-            <TextField fx:id="codigo_txt" promptText="Codigo del producto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <ButtonBar layoutX="315.0" layoutY="290.0" prefHeight="40.0" prefWidth="198.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0">

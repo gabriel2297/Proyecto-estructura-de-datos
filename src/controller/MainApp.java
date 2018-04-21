@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Cliente;
+import model.Empleado;
 import model.Producto;
 import model.lista.Lista;
 import model.venta.Dato;
@@ -25,6 +26,7 @@ public class MainApp extends Application {
 
     private Stage productoVista;
     private Stage ventaProductoVista;
+    private Stage empleadoVista;
     private Stage inicio;
     private BorderPane borde;
     Lista lista = new Lista();
@@ -46,6 +48,10 @@ public class MainApp extends Application {
      */
     private ObservableList<Cliente> facturaDatos = FXCollections.observableArrayList();
     
+    /**
+     * Arraylist que guarda los datos de empleados como una lista observable
+     */
+    private ObservableList<Empleado> empleadoDatos = FXCollections.observableArrayList();
     
     /**
      * Constructor
@@ -78,6 +84,14 @@ public class MainApp extends Application {
     }
     
     /**
+     * Metodo que devuelve los datos en empleado como un arraylist
+     * @return empleadoDatos
+     */
+    public ObservableList<Empleado> getEmpleadoDatos(){
+        return empleadoDatos;
+    }
+    
+    /**
      * Metodo que inicializa la aplicacion. Muestra el menu de inicio y llena datos en producto para testear
      * @param primaryStage - recibe el primeryStage
      */
@@ -86,15 +100,20 @@ public class MainApp extends Application {
         this.inicio = primaryStage;
         this.inicio.setTitle("Inventario");
 
-        // datos para testear 
+        // datos para testear de productos
         for(int i=65;i<85;i++){
             Producto prod = new Producto("Producto "+(char)i,i);
             productoDatos.add(prod);
+            Lista.agregarProducto(prod);
         }
         Producto prod = new Producto("Coca cola 1 litro",100);
         Producto prod2 = new Producto("Coca cola 2 litros",200);
         Producto prod3 = new Producto("Coca cola 3 litro",400);
         Producto prod4 = new Producto("Coccaina",500);
+        Lista.agregarProducto(prod);
+        Lista.agregarProducto(prod2);
+        Lista.agregarProducto(prod3);
+        Lista.agregarProducto(prod4);
         productoDatos.addAll(prod,prod2,prod3,prod4);
         
         borde();
@@ -195,7 +214,7 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("/view/FacturacionVista.fxml"));
             AnchorPane facturacion = (AnchorPane) loader.load();
             
-            // poner el scene de facturacion en el medio del root layout
+            // poner el scene de facturacion en el medio del borde
             borde.setCenter(facturacion);
             
             // darle al controlador acceso al mainApp
@@ -204,6 +223,27 @@ public class MainApp extends Application {
         }catch(IOException e){
             e.printStackTrace();
         }
+   }
+   
+   /**
+    * Mostrar pantalla de empleados
+    */
+   public void mostrarEmpleados(){
+       try{
+           // cargar la pantalla de empleados
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(MainApp.class.getResource("/view/EmpleadosVista.fxml"));
+           AnchorPane empleados = (AnchorPane) loader.load();
+           
+           // poner el scene de empleados en el medio del borde
+           borde.setCenter(empleados);
+           
+           // pasarle accceso al controlador
+           EmpleadosVistaController controller = loader.getController();
+           controller.setMainApp(this);
+       }catch(IOException e){
+           e.printStackTrace();
+       }
    }
 
     /**
@@ -220,6 +260,14 @@ public class MainApp extends Application {
      */
     public Stage getVentaProductoVista(){
         return ventaProductoVista;
+    }
+    
+    /**
+     * Devuelve el stage de vista
+     * @return empleadoVista - el stage
+     */
+    public Stage getEmpleadoVista(){
+        return empleadoVista;
     }
     
     // metodos de editar o agregar que abren dialogos
@@ -367,6 +415,43 @@ public class MainApp extends Application {
 
            return controller.isOkClicked();
        } catch (IOException e) {
+           e.printStackTrace();
+           return false;
+       }
+   }
+   
+   /**
+    * Abre un dialogo para agregar un nuevo empleado
+    * Si el usuario da click a OK guarda los cambios en el objeto empleado y retorna true
+    * 
+    * @param empleado - el objeto de empleado que se va a agregar
+    * @return true si el usuario presiona OK, false de lo contrario
+    */
+   public boolean mostrarAgregarEmpleadoDialogo(Empleado empleado){
+       try{
+           // cargar el fxml
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(MainApp.class.getResource("/view/AgregarEmpleadoVista.fxml"));
+           AnchorPane page = (AnchorPane) loader.load();
+           
+           // crear el nuevo dialogo
+           Stage dialogStage = new Stage();
+           dialogStage.setTitle("Agregar empleado");
+           dialogStage.initModality(Modality.WINDOW_MODAL);
+           dialogStage.initOwner(empleadoVista);
+           Scene scene = new Scene(page);
+           dialogStage.setScene(scene);
+           
+           // le pasa el empleado al controlador
+           AgregarEmpleadoVistaController controller = loader.getController();
+           controller.setDialogStage(dialogStage);
+           controller.setEmpleado(empleado);
+           
+           // abre el dialogo y espera respuesta del dialogo.
+           dialogStage.showAndWait();
+           
+           return controller.isOkClicked();
+       }catch(IOException e){
            e.printStackTrace();
            return false;
        }

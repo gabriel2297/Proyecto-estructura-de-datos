@@ -54,4 +54,12 @@ public class InicioController {
     public void handleFacturacionBtn(){
         mainApp.mostrarFacturacion();
     }
+    
+    /**
+     * Metodo que se encarga de manejar si el usuario da click al boton de empleados
+     * Redirige a empleados
+     */
+    public void handleEmpleadosBtn(){
+        mainApp.mostrarEmpleados();
+    }
 }

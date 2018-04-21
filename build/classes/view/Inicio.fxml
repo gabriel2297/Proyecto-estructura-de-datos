@@ -5,8 +5,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InicioController">
    <children>
-      <Button layoutX="311.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleVentasBtn" prefHeight="131.0" prefWidth="179.0" text="Ventas" />
-      <Button layoutX="66.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleProductoBtn" prefHeight="131.0" prefWidth="179.0" text="Manejo de productos" />
-      <Button layoutX="553.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleFacturacionBtn" prefHeight="131.0" prefWidth="179.0" text="Reportes y facturación" />
+      <Button layoutX="214.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleVentasBtn" prefHeight="131.0" prefWidth="179.0" text="Ventas" />
+      <Button layoutX="14.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleProductoBtn" prefHeight="131.0" prefWidth="179.0" text="Manejo de productos" />
+      <Button layoutX="411.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleFacturacionBtn" prefHeight="131.0" prefWidth="179.0" text="Reportes y facturación" />
+      <Button layoutX="607.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleEmpleadosBtn" prefHeight="131.0" prefWidth="179.0" text="Manejo de empleados" />
    </children>
 </AnchorPane>

@@ -50,17 +50,17 @@ public class AgregarProductoController {
     }
 
     /**
-     * Agrega el producto que va a ser editato al dialogo.
+     * Agrega el producto que va a ser agregado en el dialogo
      * 
      * @param producto - el producto que se va a editar
      */
     public void setProducto(Producto producto) {
         this.producto = producto;
-        nombre_txt.setText(producto.getNombre());
-        codigo_txt.setText(Integer.toString(producto.getCodigo()));
-        cantidadBodega_txt.setText(Integer.toString(producto.getCantidadBodega()));
-        precioCompra_txt.setText(Double.toString(producto.getPrecioCompra()));
-        precioVenta_txt.setText(Double.toString(producto.getPrecioVenta()));
+        nombre_txt.setText("");
+        codigo_txt.setText("");
+        cantidadBodega_txt.setText("");
+        precioCompra_txt.setText("");
+        precioVenta_txt.setText("");
     }
     
     /**
