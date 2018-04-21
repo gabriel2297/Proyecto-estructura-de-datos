@@ -140,6 +140,32 @@ public class Pila {
             }
         }
     }
+    
+    public void eliminarDato(Dato dato){
+         Dato existe = existe(dato.getDato().getDato().getCodigo());
+         // si es el unico dato en pila
+         if(existe == inicio && inicio.getSiguiente()==null){
+             existe = null;
+             inicio = null;
+             tam = 0;
+         }
+         //si es el valor de inicio pero no es el unico dato
+         else if(existe==inicio){
+             inicio = existe.getSiguiente();
+             existe = null;
+             tam--;
+         }
+         // busquelo
+         else{
+             Dato aux = inicio;
+             while(aux.getSiguiente()!=existe){
+                 aux = aux.getSiguiente();
+             }
+             aux.setSiguiente(existe.getSiguiente());
+             existe = null;
+             tam--;
+         }
+     }
      
     /**
      * Facturar la venta total del cliente, recibe el precio final del metodo extraer y pone la fila en 0 al terminar

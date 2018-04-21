@@ -53,6 +53,10 @@ public class Venta {
         p.vaciarPila();
     }
     
+    public static void eliminarDato(Dato dato){
+        p.eliminarDato(dato);
+    }
+    
     public void mostrarFacturaCliente(){
         p.facturaCliente();
     }

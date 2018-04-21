@@ -208,5 +208,31 @@ public class VentaProductoController {
            alert.showAndWait();
        }       
     }
+    
+    @FXML
+    private void handleEliminarBtn(){
+        if(ventasTable.getItems().size()>0){
+            Dato productoSeleccionado = ventasTable.getSelectionModel().getSelectedItem();
+            if(productoSeleccionado!=null){
+                Venta.restaurarInventario(productoSeleccionado.getDato(), productoSeleccionado.getDato().getDato().getCodigo());
+                ventasTable.getItems().remove(productoSeleccionado);
+                Venta.eliminarDato(productoSeleccionado);
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Eliminado");
+                alert.setHeaderText(null);
+                alert.initOwner(mainApp.getVentaProductoVista());
+                alert.setContentText("Producto eliminado de manera exitosa.");
+                alert.showAndWait();
+            }
+        }
+        else{
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Total hasta el momento");
+            alert.setHeaderText(null);
+            alert.initOwner(mainApp.getVentaProductoVista());
+            alert.setContentText("Aún no hay datos en venta");
+            alert.showAndWait();
+        }
+    }
    
 }
