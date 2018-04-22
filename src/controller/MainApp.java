@@ -99,26 +99,8 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.inicio = primaryStage;
         this.inicio.setTitle("Inventario");
-
-        // datos para testear de productos
-        for(int i=65;i<85;i++){
-            Producto prod = new Producto("Producto "+(char)i,i);
-            productoDatos.add(prod);
-            Lista.agregarProducto(prod);
-        }
-        Producto prod = new Producto("Coca cola 1 litro",100);
-        Producto prod2 = new Producto("Coca cola 2 litros",200);
-        Producto prod3 = new Producto("Coca cola 3 litro",400);
-        Producto prod4 = new Producto("Coccaina",500);
-        Lista.agregarProducto(prod);
-        Lista.agregarProducto(prod2);
-        Lista.agregarProducto(prod3);
-        Lista.agregarProducto(prod4);
-        productoDatos.addAll(prod,prod2,prod3,prod4);
-        
         borde();
         mostrarInicio();
-        
     }
 
     /**

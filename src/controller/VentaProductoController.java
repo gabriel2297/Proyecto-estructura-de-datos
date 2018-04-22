@@ -172,7 +172,7 @@ public class VentaProductoController {
                     dialog.setTitle("Venta terminada satisfactoriamente");
                     dialog.setHeaderText("Factura a nombre de: "+nombreFactura.get()+
                             "\n\nMonto a pagar: ₡"+precioFinal
-                            +"\n\n¿Con cuánto dinero paga el cliente? Presione 0 si es tarjeta.\n");
+                            +"\n\n¿Con cuánto dinero paga el cliente? Presione 0 si el cliente paga con tarjeta.\n");
                     Optional<String> result = dialog.showAndWait();
                     pagaCon = Integer.parseInt(result.get());
                 }catch(NumberFormatException e){
@@ -184,7 +184,8 @@ public class VentaProductoController {
                     dialog.setTitle("Venta terminada satisfactoriamente");
                     dialog.setHeaderText("Factura a nombre de: "+nombreFactura.get()+
                             "\n\nMonto a pagar: ₡"+precioFinal
-                            +"\n\nPor favor ingrese un cambio mayor al monto final del cliente. Presione 0 si es tarjeta.\n");
+                            +"\n\nLa cantidad de dinero con la que paga el cliente debe de ser mayor al monto "
+                                    + "que paga, por favor verifique los datos. Presione 0 si el cliente paga con tarjeta.\n");
                     Optional<String> result = dialog.showAndWait();
                     try{
                         pagaCon = Integer.parseInt(result.get());

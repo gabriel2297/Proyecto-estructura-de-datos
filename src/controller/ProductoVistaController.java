@@ -58,10 +58,10 @@ public class ProductoVistaController {
         nombreColumn.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         codigoColumn.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
         
-        showProductoDetails(null);
+        mostrarDetallesProducto(null);
 
         productoTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showProductoDetails(newValue));
+                (observable, oldValue, newValue) -> mostrarDetallesProducto(newValue));
     }
 
     /**
@@ -82,7 +82,7 @@ public class ProductoVistaController {
     * 
     * @param producto - recibe el producto que se seleccionó o null
     */
-   private void showProductoDetails(Producto producto) {
+   private void mostrarDetallesProducto(Producto producto) {
        if (producto != null) {
            nombreLabel.setText(producto.getNombre());
            codigoLabel.setText(Integer.toString(producto.getCodigo()));
@@ -136,7 +136,7 @@ public class ProductoVistaController {
                Lista.modificar(productoSeleccionado.getCodigo(), productoSeleccionado.getCantidadBodega(), 
                        productoSeleccionado.getPrecioCompra(), productoSeleccionado.getPrecioVenta(),
                        productoSeleccionado.getNombre());
-               showProductoDetails(productoSeleccionado);
+               mostrarDetallesProducto(productoSeleccionado);
            }
        } else {
            // Nothing selected.
