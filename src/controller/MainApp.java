@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import model.Cliente;
 import model.Empleado;
 import model.Producto;
+import model.empleados.Empleados;
+import model.lista.Lista;
 import model.venta.Dato;
 
 /**
@@ -95,6 +97,16 @@ public class MainApp extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+        for(int i=0;i<30;i++){
+            Producto prod = new Producto("Producto "+i,i);
+            Lista.agregarProducto(prod);
+            productoDatos.add(prod);
+        }
+        for(int i=0;i<5;i++){
+            Empleado emp = new Empleado("Empleado "+i,i);
+            Empleados.creaEmpleado(emp);
+            empleadoDatos.add(emp);
+        }
         this.inicio = primaryStage;
         this.inicio.setTitle("Inventario");
         borde();
