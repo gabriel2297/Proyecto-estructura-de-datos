@@ -72,9 +72,7 @@ public class EditarProductoVentaController {
     private void handleOk() {
         if (isInputValid()) {
             int valorAnterior = dato.getCantidad();
-            System.out.println(valorAnterior);
             int enBodega = dato.getDato().getDato().getCantidadBodega();
-            System.out.println(enBodega);
             Venta.restaurarInventario(dato.getDato(), dato.getDato().getDato().getCodigo());
             dato.setCantidad(Integer.parseInt(cantidad_txt.getText()));
             if(!Venta.haySuficientes(dato)){
