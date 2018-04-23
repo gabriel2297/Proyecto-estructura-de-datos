@@ -69,17 +69,13 @@ public class AgregarProdVentaController {
         nombreColumn.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         codigoColumn.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
         cantidadColumn.setCellValueFactory(cellData -> cellData.getValue().cantidadBodegaProperty().asObject());
-        
         // limpiar los detalles de producto
         mostrarProductoSeleccionado(null);
-        
         // agregar el choicebox
         choiceBox.getItems().addAll("Buscar Producto", "Buscar Codigo");
         choiceBox.setValue("Buscar Producto");
-
         // agregar el textfield
         busqueda.setPromptText("Busque aqui!");
-        
         busqueda.setOnKeyReleased(keyEvent ->
         {
             switch (choiceBox.getValue())// switch con el valor del choicebox seleccionado
@@ -99,7 +95,6 @@ public class AgregarProdVentaController {
                     break;
             }
         });
-        
         // cambiar la tabla al seleccionar un nuevo producto
         choiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
         {
@@ -109,7 +104,6 @@ public class AgregarProdVentaController {
                 productos.setPredicate(null);
             }
         });
-        
         // metodo que escucha por cambios en seleccion y cambia dinamicamente la seleccion
         productoTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> mostrarProductoSeleccionado(newValue));

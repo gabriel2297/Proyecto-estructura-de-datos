@@ -14,6 +14,7 @@ public class Venta {
      * @param aux - el dato que contiene la cantidad deseada
      * @return true si la cantidad en stock es mayor o igual a la cantidad que se lleva
      */
+    
     public static boolean haySuficientes(Dato aux){
         return aux.getCantidad()<=aux.getDato().getDato().getCantidadBodega();
     }
@@ -48,7 +49,7 @@ public class Venta {
         aux.getDato().getDato().setCantidadBodega(aux.getDato().getDato().getCantidadBodega()-aux.getCantidad());
         Pila.editarProductoPila(codigo, nuevaCantidad);
     }
-
+    
     /**
      * Metodo para eliminar toda la venta. Vacia la pila
      */

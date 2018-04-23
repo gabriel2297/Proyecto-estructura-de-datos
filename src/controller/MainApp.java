@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import model.Cliente;
 import model.Empleado;
 import model.Producto;
-import model.lista.Lista;
 import model.venta.Dato;
 
 /**
@@ -29,7 +28,6 @@ public class MainApp extends Application {
     private Stage empleadoVista;
     private Stage inicio;
     private BorderPane borde;
-    Lista lista = new Lista();
 
     
     /**
@@ -92,8 +90,8 @@ public class MainApp extends Application {
     }
     
     /**
-     * Metodo que inicializa la aplicacion. Muestra el menu de inicio y llena datos en producto para testear
-     * @param primaryStage - recibe el primeryStage
+     * Metodo que inicializa la aplicacion. Muestra el menu de inicio 
+     * @param primaryStage - recibe el primeryStage, en este caso "Inicio"
      */
     @Override
     public void start(Stage primaryStage) {
@@ -184,7 +182,7 @@ public class MainApp extends Application {
        }catch(IOException e){
            e.printStackTrace();
        }
-   }
+    }
    
    /**
     * Muestra la pantalla de facturacion
@@ -261,7 +259,7 @@ public class MainApp extends Application {
     * @param producto - el objeto de producto que se va a editar
     * @return true si el usuario presiona OK, false de lo contrario
     */
-   public boolean mostrarEditarProductoDialogo(Producto producto) {
+    public boolean mostrarEditarProductoDialogo(Producto producto) {
        try {
            // cargar el fxml
            FXMLLoader loader = new FXMLLoader();
@@ -289,7 +287,7 @@ public class MainApp extends Application {
            e.printStackTrace();
            return false;
        }
-   }
+    }
    
    /**
     * Abre un dialogo para agregar un nuevo producto

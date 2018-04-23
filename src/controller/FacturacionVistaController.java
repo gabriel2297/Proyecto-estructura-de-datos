@@ -17,7 +17,6 @@ public class FacturacionVistaController{
     private TableView<Cliente> facturasTable;
     @FXML
     private TableColumn<Cliente, String> clienteColumn;
-
     // labels
     @FXML
     private Label nombreLabel;
@@ -25,11 +24,10 @@ public class FacturacionVistaController{
     private Label fechaCompraLabel;
     @FXML
     private Label totalLabel;
-    
     // referencia a la app principal.
     private MainApp mainApp;
-
-
+    
+    
     /**
      * Constructor por defecto. 
      * Llamado antes de que se llame el método de inicializar.

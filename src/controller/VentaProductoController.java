@@ -21,7 +21,6 @@ import model.venta.Venta;
  * @author Elena
  */
 public class VentaProductoController {
-    
     // tabla y columnas
     @FXML
     private TableView<Dato> ventasTable;
@@ -31,9 +30,8 @@ public class VentaProductoController {
     private TableColumn<Dato, Integer> cantidadColumn;
     @FXML 
     private TableColumn<Dato, Double> precioColumn;
-    
     private Cliente cliente;
-    
+
     private MainApp mainApp;
     
     /**

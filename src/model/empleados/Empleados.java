@@ -3,7 +3,8 @@ package model.empleados;
 import model.Empleado;
 
 /**
- *
+ * Clase que se encarga a almacenar los empleados
+ * 
  * @author Alonso
  */
 public class Empleados {

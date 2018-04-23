@@ -3,7 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 
 /**
- * Método que maneja el menú de inicio
+ * Clase que maneja el menú de inicio
  * 
  * @author todos
  */

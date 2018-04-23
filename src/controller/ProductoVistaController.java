@@ -16,7 +16,6 @@ import model.lista.Nodo;
  * @author Elena
  */
 public class ProductoVistaController {
-    
     // tabla y columnas
     @FXML
     private TableView<Producto> productoTable;
@@ -24,7 +23,6 @@ public class ProductoVistaController {
     private TableColumn<Producto, String> nombreColumn;
     @FXML
     private TableColumn<Producto, Integer> codigoColumn;
-
     // labels
     @FXML
     private Label nombreLabel;
@@ -36,10 +34,8 @@ public class ProductoVistaController {
     private Label precioVentaLabel;
     @FXML
     private Label cantidadBodegaLabel;
-
     private MainApp mainApp;
-
-
+    
     /**
      * Constructor por defecto. 
      * Llamado antes de que se llame el método de inicializar.

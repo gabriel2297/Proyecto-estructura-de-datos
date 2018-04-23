@@ -5,7 +5,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Empleado;
-import model.Producto;
 
 
 /**
@@ -51,7 +50,7 @@ public class AgregarEmpleadoVistaController  {
     }
 
     /**
-     * Agrega el producto que va a ser agregado al dialogo.
+     * Agrega el empleado que va a ser agregado al dialogo.
      * 
      * @param empleado - el empleado que se va a editar
      */

@@ -25,8 +25,6 @@ public class Cliente {
         this(null,0);
     }
     
-    
-    
     /**
      * Constructor que inicializa los valores de nombre y total
      * @param nombre - recibe el nombre del cliente

@@ -15,7 +15,6 @@ import model.empleados.Empleados;
  * @author Alonso
  */
 public class EmpleadosVistaController{
-    
     // tabla y columnas
     @FXML
     private TableView<Empleado> empleadosTable;
@@ -23,7 +22,6 @@ public class EmpleadosVistaController{
     private TableColumn<Empleado, String> nombreColumn;
     @FXML
     private TableColumn<Empleado, Integer> codigoColumn;
-
     // labels
     @FXML
     private Label nombreLabel;
@@ -35,9 +33,7 @@ public class EmpleadosVistaController{
     private Label puestoLabel;
     @FXML
     private Label contratadorLabel;
-
     private MainApp mainApp;
-
 
     /**
      * Constructor por defecto. 
