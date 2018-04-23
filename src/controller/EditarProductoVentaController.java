@@ -72,9 +72,13 @@ public class EditarProductoVentaController {
     private void handleOk() {
         if (isInputValid()) {
             int valorAnterior = dato.getCantidad();
+            System.out.println(valorAnterior);
+            int enBodega = dato.getDato().getDato().getCantidadBodega();
+            System.out.println(enBodega);
             Venta.restaurarInventario(dato.getDato(), dato.getDato().getDato().getCodigo());
             dato.setCantidad(Integer.parseInt(cantidad_txt.getText()));
             if(!Venta.haySuficientes(dato)){
+                dato.getDato().getDato().setCantidadBodega(enBodega);
                 dato.setCantidad(valorAnterior);
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.initOwner(editarVentaStage);
@@ -83,10 +87,11 @@ public class EditarProductoVentaController {
                 alert.setContentText("La nueva cantidad es mayor al stock en inventario. Por favor agregue más"
                         + " cantidad al inventario o intentelo de nuevo.");
                 alert.showAndWait();
+                okClicked = false;
             }else{
                 Venta.editarVenta(dato.getDato().getDato().getCodigo(), Integer.parseInt(cantidad_txt.getText()));
+                okClicked = true;
             }
-            okClicked = true;
             editarVentaStage.close();
         }
     }

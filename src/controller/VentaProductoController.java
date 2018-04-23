@@ -234,6 +234,14 @@ public class VentaProductoController {
                 alert.setContentText("El cambio de cantidad concluyo de manera exitosa.");
                 alert.showAndWait();
             }
+           else if(!okClicked){
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Cambio no se ha realizado");
+                alert.setHeaderText(null);
+                alert.initOwner(mainApp.getVentaProductoVista());
+                alert.setContentText("No se han realizado cambios.");
+                alert.showAndWait();
+           }
        } else {
            Alert alert = new Alert(AlertType.WARNING);
            alert.initOwner(mainApp.getProductoVista());
